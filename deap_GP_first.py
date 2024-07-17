@@ -1,12 +1,22 @@
-# Original
-# RQ: To what extend does the use of GP for linear regression create a more accurate computational model?
-# Accuracy: Like original fitness func - how close to the 'real' model (We need to give one)
-# To ensure robustness test on: Different operators, Different data sizes, Noisy data
+# RQ1: To what extent does the use of GP for linear regression create a more accurate computational model?
+# RQ2: How does changing the operators used affect the accuracy of our computational model?
+# RQ3: How does changing the size of the data set used affect the accuracy of our computational model?
+# RQ4: How does the use of a noisy data set affect the accuracy of our computational model?
+
+# Accuracy: How many generations for fitness = 0 or if gen > 40 use nmse - I need to figure out how to give a concrete score that combines these ideas
+
+# Experiment: 
+# 1. Create a list of 10 equations of different complexity and using different operators. 
+# 2. Run 25 different seeds for each equation using my mix of GP + linear regression. 
+# 2.1 RQ2: 4 using just add, sub, mul, div. 4 adding neg, cos, sin + random. 5 using all. 
+# 2.2 RQ3: 7 using 10/25/50/100/250/600/1000) data points in range x (2-1002 randomly). 
+# 2.3 RQ4: 5 using noisty data.
+# 3. Run those 25 seeds using just GP.
+# 4. Run those 25 seeds using just linear regression
 
 # Ideas:
-# Make last bit diff research questions
-# If found fitness = 0 stop - how many gens to find (RQ) - how long does it take
-# Syntatic closenose (RQ) - have to research
+# Syntatic closenose (RQ5?) - have to research
+# If a regression coefficient close to 0 = remove - post processing
 
 import operator
 import math
@@ -14,67 +24,29 @@ import random
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import statsmodels.api as sm
 
 from functools import partial
 from deap import algorithms, base, creator, tools, gp
 
-# Define new functions
-
-# Fitness value of infinite if error - not return 1
-def protectedDiv(left, right):
-    try:
-        return left / right
-    except:
-        return 1
-
-def protectedLog(value):
-    try:
-        return math.log(value)
-    except:
-        return 1
-
-def protectedPow(base, exponent):
-    try:
-        return math.pow(base, exponent)
-    except:
-        return 1
-    
-def protectedSinh(x):
-    try:
-        return math.sinh(x)
-    except:
-        return 1
-
-def protectedCosh(x):
-    try:
-        return math.cosh(x)
-    except:
-        return 1
-    
-def protectedExp(x):
-    try:
-        return math.exp(x)
-    except:
-        return 1
-
 pset = gp.PrimitiveSet("MAIN", 1)
 pset.addPrimitive(operator.add, 2)
 pset.addPrimitive(operator.sub, 2)
 pset.addPrimitive(operator.mul, 2)
-pset.addPrimitive(protectedDiv, 2)
+pset.addPrimitive(operator.truediv, 2)
 pset.addPrimitive(operator.neg, 1)
 pset.addPrimitive(math.cos, 1)
 pset.addPrimitive(math.sin, 1)
 pset.addEphemeralConstant("rand101", partial(random.randint, -1, 1))
 pset.renameArguments(ARG0='x')
 
-pset.addPrimitive(protectedExp, 1)
-pset.addPrimitive(protectedLog, 1)
-pset.addPrimitive(protectedPow, 2)
+pset.addPrimitive(math.exp, 1)
+pset.addPrimitive(math.log, 1)
+pset.addPrimitive(math.pow, 2)
 pset.addPrimitive(math.tan, 1)
-pset.addPrimitive(protectedSinh, 1)
-pset.addPrimitive(protectedCosh, 1)
+pset.addPrimitive(math.sinh, 1)
+pset.addPrimitive(math.cosh, 1)
 pset.addPrimitive(math.tanh, 1)
 
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
@@ -98,39 +70,40 @@ def split(individual):
         return terms
     return [individual]
 
-def evalSymbReg(individual, points_x, points_y): # Convert to pandas instead of numpy.array
+def evalSymbReg(individual, points_x, points_y):
+    try:
+        terms = split(individual)
 
-    terms = split(individual)
-    X = np.empty((0, len(terms) + 1))
+        # Create Exog variables as a pandas DataFrame
+        data = []
+        for x in points_x:
+            values = []
+            for term in terms:
+                func  = toolbox.compile(expr=term)
+                values.append(func(x))
+            values.append(1) #add intercepts
+            data.append(values)
+        
+        df = pd.DataFrame(data)        
 
-    # Create Exog variables
-    for x in points_x:
-        values = []
-        for term in terms:
-            func  = toolbox.compile(expr=term)
-            values.append(func(x))
-        values.append(1) #add intercepts
-        X = np.vstack([X, values])
+        # Create model, fit (run) it, give estimates from it
+        model = sm.OLS(points_y, df)
+        res = model.fit()
+        y_estimates = res.predict(df)
 
-    
-    #Idea: If a regression coefficient close to 0 - remove - post processing
-    
+        # Calc errors using an improved normalised mean squared
+        sqerrors = (y_estimates - points_y)**2
+        mean_squared = math.fsum(sqerrors) / len(points_x)
+        nmse = mean_squared / (math.fsum(points_y)/ len(points_y))
 
-    # Create model, fit (run) it, give estimates from it
-    model = sm.OLS(points_y, X)
-    res = model.fit()
-    y_estimates = res.predict(X)
+        return nmse,
 
-    # print(individual)
+        # Fitness value of infinite if error - not return 1
+    except (OverflowError, ValueError, ZeroDivisionError):
+        return 10**100,
 
-    # Calc errors
-    sqerrors = (y_estimates - points_y)**2
-
-    # improve with michael's function - https://www.marinedatascience.co/blog/2019/01/07/normalizing-the-rmse/
-    return math.fsum(sqerrors) / len(points_x),
-
-points_x = [x for x in range(-100, 100)]
-points_y = [(protectedLog(x**4) + protectedDiv((x**3 + x**2 + x**0.5), protectedLog(x**5)) + math.exp(x)) for x in range(-100, 100)]
+points_x = [x for x in range(2, 100)]
+points_y = [(math.log(x**5) + (x**3 + x**2 + x**0.5)/math.log(x**3.5) + math.exp(x)) for x in range(2, 100)]
 
 toolbox.register("evaluate", evalSymbReg, points_x=points_x, points_y=points_y)
 toolbox.register("select", tools.selTournament, tournsize=3)
@@ -142,7 +115,7 @@ toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_v
 toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
 
 def main():
-    random.seed(2)
+    random.seed(1)
 
     pop = toolbox.population(n=300)
     hof = tools.HallOfFame(1) # to maintain some individuals if using ea/ga that deletes old population on each generation
