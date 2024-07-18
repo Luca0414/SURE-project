@@ -18,7 +18,6 @@
 # Syntatic closenose (RQ5?) - have to research
 # If a regression coefficient close to 0 = remove - post processing
 
-import math
 import random
 import warnings
 import patsy
@@ -77,8 +76,8 @@ def evalSymbReg(individual, points_x, points_y):
 
         # Calc errors using an improved normalised mean squared
         sqerrors = (points_y - y_estimates) ** 2
-        mean_squared = math.fsum(sqerrors) / len(points_x)
-        nmse = mean_squared / (math.fsum(points_y) / len(points_y))
+        mean_squared = sqerrors.sum() / len(points_x)
+        nmse = mean_squared / (points_y.sum() / len(points_y))
 
         return (nmse,)
 
@@ -94,9 +93,7 @@ def evalSymbReg(individual, points_x, points_y):
 
 
 points_x = pd.DataFrame({"x": [float(x) for x in range(2, 100)]})
-points_y = pd.Series(
-    [(math.log(x**5) + (x**3 + x**2 + x**0.5) / math.log(x**3.5) + math.exp(x)) for x in range(2, 100)]
-)
+points_y = pd.Series([(log(x**5) + (x**3 + x**2 + x**0.5) / log(x**3.5) + exp(x)) for x in range(2, 100)])
 
 toolbox.register("evaluate", evalSymbReg, points_x=points_x, points_y=points_y)
 toolbox.register("select", tools.selTournament, tournsize=3)
