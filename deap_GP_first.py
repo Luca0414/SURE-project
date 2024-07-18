@@ -5,11 +5,11 @@
 
 # Accuracy: How many generations for fitness = 0 or if gen > 40 use nmse - I need to figure out how to give a concrete score that combines these ideas
 
-# Experiment: 
-# 1. Create a list of 10 equations of different complexity and using different operators. 
-# 2. Run 25 different seeds for each equation using my mix of GP + linear regression. 
-# 2.1 RQ2: 4 using just add, sub, mul, div. 4 adding neg, cos, sin + random. 5 using all. 
-# 2.2 RQ3: 7 using 10/25/50/100/250/600/1000) data points in range x (2-1002 randomly). 
+# Experiment:
+# 1. Create a list of 10 equations of different complexity and using different operators.
+# 2. Run 25 different seeds for each equation using my mix of GP + linear regression.
+# 2.1 RQ2: 4 using just add, sub, mul, div. 4 adding neg, cos, sin + random. 5 using all.
+# 2.2 RQ3: 7 using 10/25/50/100/250/600/1000) data points in range x (2-1002 randomly).
 # 2.3 RQ4: 5 using noisty data.
 # 3. Run those 25 seeds using just GP.
 # 4. Run those 25 seeds using just linear regression
@@ -18,36 +18,44 @@
 # Syntatic closenose (RQ5?) - have to research
 # If a regression coefficient close to 0 = remove - post processing
 
-import operator
 import math
 import random
+import warnings
+import patsy
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import statsmodels.api as sm
+import statsmodels.formula.api as smf
+import statsmodels
 
 from functools import partial
 from deap import algorithms, base, creator, tools, gp
 
-pset = gp.PrimitiveSet("MAIN", 1)
-pset.addPrimitive(operator.add, 2)
-pset.addPrimitive(operator.sub, 2)
-pset.addPrimitive(operator.mul, 2)
-pset.addPrimitive(operator.truediv, 2)
-pset.addPrimitive(operator.neg, 1)
-pset.addPrimitive(math.cos, 1)
-pset.addPrimitive(math.sin, 1)
-pset.addEphemeralConstant("rand101", partial(random.randint, -1, 1))
-pset.renameArguments(ARG0='x')
+from numpy import negative, exp, power, log, sin, cos, tan, sinh, cosh, tanh
 
-pset.addPrimitive(math.exp, 1)
-pset.addPrimitive(math.log, 1)
-pset.addPrimitive(math.pow, 2)
-pset.addPrimitive(math.tan, 1)
-pset.addPrimitive(math.sinh, 1)
-pset.addPrimitive(math.cosh, 1)
-pset.addPrimitive(math.tanh, 1)
+from operator import attrgetter, add, sub, mul, truediv
+
+warnings.filterwarnings("error")
+
+pset = gp.PrimitiveSet("MAIN", 1)
+pset.addPrimitive(add, 2)
+pset.addPrimitive(sub, 2)
+pset.addPrimitive(mul, 2)
+pset.addPrimitive(truediv, 2)
+pset.addPrimitive(negative, 1)
+pset.addPrimitive(cos, 1)
+pset.addPrimitive(sin, 1)
+pset.addEphemeralConstant("rand101", partial(random.randint, -1, 1))
+pset.renameArguments(ARG0="x")
+
+pset.addPrimitive(exp, 1)
+pset.addPrimitive(log, 1)
+pset.addPrimitive(power, 2)
+pset.addPrimitive(tan, 1)
+# pset.addPrimitive(sinh, 1)
+# pset.addPrimitive(cosh, 1)
+# pset.addPrimitive(tanh, 1)
 
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
@@ -58,52 +66,37 @@ toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.ex
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 toolbox.register("compile", gp.compile, pset=pset)
 
-def split(individual):
-    if len(individual) > 1:
-        terms = []
-        # Recurse over children if add/sub
-        if individual[0].name in ['add','sub']:
-            terms.extend(split(creator.Individual(gp.PrimitiveTree(individual[individual.searchSubtree(1).start:individual.searchSubtree(1).stop]))))
-            terms.extend(split(creator.Individual(gp.PrimitiveTree(individual[individual.searchSubtree(1).stop:]))))
-        else:
-            terms.append(individual)
-        return terms
-    return [individual]
 
 def evalSymbReg(individual, points_x, points_y):
+    points_x["y"] = points_y
     try:
-        terms = split(individual)
-
-        # Create Exog variables as a pandas DataFrame
-        data = []
-        for x in points_x:
-            values = []
-            for term in terms:
-                func  = toolbox.compile(expr=term)
-                values.append(func(x))
-            values.append(1) #add intercepts
-            data.append(values)
-        
-        df = pd.DataFrame(data)        
-
-        # Create model, fit (run) it, give estimates from it
-        model = sm.OLS(points_y, df)
+        # Create model, fit (run) it, give estimates from it]
+        model = smf.ols(f"y ~ {individual}", points_x)
         res = model.fit()
-        y_estimates = res.predict(df)
+        y_estimates = res.predict(points_x)
 
         # Calc errors using an improved normalised mean squared
-        sqerrors = (y_estimates - points_y)**2
+        sqerrors = (points_y - y_estimates) ** 2
         mean_squared = math.fsum(sqerrors) / len(points_x)
-        nmse = mean_squared / (math.fsum(points_y)/ len(points_y))
+        nmse = mean_squared / (math.fsum(points_y) / len(points_y))
 
-        return nmse,
+        return (nmse,)
 
         # Fitness value of infinite if error - not return 1
-    except (OverflowError, ValueError, ZeroDivisionError):
-        return 10**100,
+    except (
+        OverflowError,
+        ValueError,
+        ZeroDivisionError,
+        statsmodels.tools.sm_exceptions.MissingDataError,
+        patsy.PatsyError,
+    ):
+        return (10**100,)
 
-points_x = [x for x in range(2, 100)]
-points_y = [(math.log(x**5) + (x**3 + x**2 + x**0.5)/math.log(x**3.5) + math.exp(x)) for x in range(2, 100)]
+
+points_x = pd.DataFrame({"x": [float(x) for x in range(2, 100)]})
+points_y = pd.Series(
+    [(math.log(x**5) + (x**3 + x**2 + x**0.5) / math.log(x**3.5) + math.exp(x)) for x in range(2, 100)]
+)
 
 toolbox.register("evaluate", evalSymbReg, points_x=points_x, points_y=points_y)
 toolbox.register("select", tools.selTournament, tournsize=3)
@@ -111,14 +104,17 @@ toolbox.register("mate", gp.cxOnePoint)
 toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
 toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
-toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
-toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=17))
+toolbox.decorate("mate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
+toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
+
 
 def main():
     random.seed(1)
 
     pop = toolbox.population(n=300)
-    hof = tools.HallOfFame(1) # to maintain some individuals if using ea/ga that deletes old population on each generation
+    hof = tools.HallOfFame(
+        1
+    )  # to maintain some individuals if using ea/ga that deletes old population on each generation
 
     stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
     stats_size = tools.Statistics(len)
@@ -128,8 +124,7 @@ def main():
     mstats.register("min", np.min)
     mstats.register("max", np.max)
 
-    pop, log = algorithms.eaMuPlusLambda(pop, toolbox, 10, 50, 0.4, 0.3, 40, stats=mstats,
-                                   halloffame=hof, verbose=True)
+    pop, log = algorithms.eaMuPlusLambda(pop, toolbox, 10, 50, 0.4, 0.3, 20, stats=mstats, halloffame=hof, verbose=True)
 
     gen = log.chapters["fitness"].select("gen")
     min = log.chapters["fitness"].select("min")
@@ -148,10 +143,12 @@ def main():
     labs = [l.get_label() for l in lns]
     ax1.legend(lns, labs, loc="center right")
 
-    plt.show()
+    # plt.show()
 
     # print log
     return pop, log, hof
 
+
 if __name__ == "__main__":
-    main()
+    pop, log, hof = main()
+    print(pd.DataFrame({"x": [str(x) for x in pop], "fitness": [x.fitness for x in pop]}))
