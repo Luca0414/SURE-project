@@ -6,10 +6,10 @@
 # Accuracy: How many generations for fitness = 0 or if gen > 40 use min nmse - Will have to use two figures to show these two outcomes
 
 # Experiment: 
-# 1. Create a list of 10(00 in real) equations of different complexity and using different operators. # Use benchmarks given
+# 1. Make 100 equations for each amount of variables + operator level combo. And the benchmarks given: All but salustowicz_2d + unwrapped_ball
 # 2. Run 30 different seeds for each version.
 # 2.1 RQ2: Using just add, sub, mul, div, neg + reciprocal. Adding sin, cos, tan, log, root + square. Adding exponential, cube, 4th power, sinh, cosh + tanh. 
-# 2.2 RQ3: Using 10/100/1000 data points randomly for each variable. 
+# 2.2 RQ3: Using 10/100/1000 data points randomly for each variable.
 # 2.3 RQ4: Using noisty data.
 # 3. Run those 150 seeds using just GP.
 # 4. Run those 150 seeds using just linear regression.
@@ -33,24 +33,23 @@ import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
 
-from deap import base, creator, tools, gp
+from deap import base, creator, tools, gp, benchmarks
 from numpy import negative, exp, log, sin, cos, tan, sinh, cosh, tanh
 from operator import add, sub, mul, truediv
 
-random.seed(1) # change to use argument
-
-
 warnings.filterwarnings("error")
 
-# parser = argparse.ArgumentParser(description="Run experiments")
-# parser.add_argument('--seed', type=int, required=True, help='Random seed')
-# parser.add_argument('--equation', type=str, required=True, help='Equation to use')
-# parser.add_argument('--operators', type=str, required=True, help='Operators to include')
-# parser.add_argument('--data_points', type=int, required=True, help='Number of data points')
-# parser.add_argument('--noise', type=float, required=True, help='Noise level')
-# parser.add_argument('--method', type=str, required=True, choices=['GP', 'LR', 'GPLR'], help='Method to use (GP, LR)')
+parser = argparse.ArgumentParser(description="Run experiments")
+parser.add_argument('--seed', type=int, required=True, help='Seed to use')
+parser.add_argument('--equation', type=str, required=True, help='Equation to use')
+parser.add_argument('--operator_level', type=int, required=True, help='Operators to include (level)')
+parser.add_argument('--data_points', type=int, required=True, help='Number of data points')
+parser.add_argument('--noise', type=float, required=True, help='Noise level')
+parser.add_argument('--method', type=str, required=True, choices=['GP', 'LR', 'GPLR'], help='Method to use (GP, LR, GPLR)')
 
-# args = parser.parse_args()
+args = parser.parse_args()
+
+random.seed(args.seed)
 
 # Define more operators
 def root(x):
@@ -78,19 +77,21 @@ pset.addPrimitive(truediv, 2)
 pset.addPrimitive(negative, 1)
 pset.addPrimitive(reciprocal, 1)
 
-pset.addPrimitive(sin, 1)
-pset.addPrimitive(cos, 1)
-pset.addPrimitive(tan, 1)
-pset.addPrimitive(log, 1)
-pset.addPrimitive(root, 1)
-pset.addPrimitive(square, 1)
+if args.operator_level > 0:
+    pset.addPrimitive(sin, 1)
+    pset.addPrimitive(cos, 1)
+    pset.addPrimitive(tan, 1)
+    pset.addPrimitive(log, 1)
+    pset.addPrimitive(root, 1)
+    pset.addPrimitive(square, 1)
 
-pset.addPrimitive(exp, 1)
-pset.addPrimitive(cube, 1)
-pset.addPrimitive(fourth_power, 1)
-pset.addPrimitive(sinh, 1)
-pset.addPrimitive(cosh, 1)
-pset.addPrimitive(tanh, 1)
+if args.operator_level > 1:
+    pset.addPrimitive(exp, 1)
+    pset.addPrimitive(cube, 1)
+    pset.addPrimitive(fourth_power, 1)
+    pset.addPrimitive(sinh, 1)
+    pset.addPrimitive(cosh, 1)
+    pset.addPrimitive(tanh, 1)
 
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
@@ -183,7 +184,8 @@ def eaMuPlusLambda(
     halloffame=None,
     verbose=__debug__,
 ):
-    population = [toolbox.repair(ind) for ind in population]
+    if args.method == 'GPLR':
+        population = [toolbox.repair(ind) for ind in population]
 
     logbook = tools.Logbook()
     logbook.header = ["gen", "nevals"] + (stats.fields if stats else [])
@@ -205,7 +207,8 @@ def eaMuPlusLambda(
 
         # Vary the population
         offspring = make_offspring(population, toolbox, lambda_)
-        offspring = [toolbox.repair(ind) for ind in offspring]
+        if args.method == 'GPLR':
+            offspring = [toolbox.repair(ind) for ind in offspring]
 
         # Evaluate the individuals with an invalid fitness
         for ind in offspring:
@@ -226,9 +229,8 @@ def eaMuPlusLambda(
 
     return population, logbook
 
-
-points_x = pd.DataFrame({"x": [float(x) for x in range(2, 100)]})
-points_y = pd.Series([x**2 + x + 5 for x in range(2, 100)])
+points_x = pd.DataFrame({"x": [random.randint(-1000,1000) for x in range(args.data_points)]})
+points_y = pd.Series([x**2 + x + 5 + random.gauss(0, args.noise) for x in range(args.data_points)])
 
 solution = gp.PrimitiveTree.from_string("add(square(x), x)", pset)
 print(repair(solution, points_x, points_y))
@@ -262,60 +264,59 @@ toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=
 
 
 def main():
-
     mu = 20
 
     pop = toolbox.population(n=mu)
+    if args.method == 'GP' or args.method == 'GPLR':
+        hof = tools.HallOfFame(1)  # to maintain some individuals if using ea/ga that deletes old population on each generation
 
-    hof = tools.HallOfFame(
-        1
-    )  # to maintain some individuals if using ea/ga that deletes old population on each generation
+        stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
+        stats_size = tools.Statistics(len)
+        mstats = tools.MultiStatistics(fitness=stats_fit, size=stats_size)
+        mstats.register("avg", np.mean)
+        mstats.register("std", np.std)
+        mstats.register("min", np.min)
+        mstats.register("max", np.max)
 
-    stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
-    stats_size = tools.Statistics(len)
-    mstats = tools.MultiStatistics(fitness=stats_fit, size=stats_size)
-    mstats.register("avg", np.mean)
-    mstats.register("std", np.std)
-    mstats.register("min", np.min)
-    mstats.register("max", np.max)
+        pop, log = eaMuPlusLambda(
+            pop,
+            toolbox,
+            mu=mu,
+            lambda_=5,
+            ngen=100,
+            stats=None,
+            halloffame=hof,
+            verbose=True,
+        )
 
-    pop, log = eaMuPlusLambda(
-        pop,
-        toolbox,
-        mu=mu,
-        lambda_=5,
-        ngen=100,
-        stats=None,
-        halloffame=hof,
-        verbose=True,
-    )
+        gen = log.chapters["fitness"].select("gen")
+        min = log.chapters["fitness"].select("min")
+        avg = log.chapters["fitness"].select("avg")
 
-    gen = log.chapters["fitness"].select("gen")
-    min = log.chapters["fitness"].select("min")
-    avg = log.chapters["fitness"].select("avg")
+        fig, ax1 = plt.subplots()
+        line1 = ax1.plot(gen, min, "b", label="Minimum")
+        ax1.set_xlabel("Generation")
+        ax1.set_ylabel("fitness", color="b")
+        for tl in ax1.get_yticklabels():
+            tl.set_color("b")
 
-    fig, ax1 = plt.subplots()
-    line1 = ax1.plot(gen, min, "b", label="Minimum")
-    ax1.set_xlabel("Generation")
-    ax1.set_ylabel("fitness", color="b")
-    for tl in ax1.get_yticklabels():
-        tl.set_color("b")
+        line2 = ax1.plot(gen, avg, "r-", label="Average")
 
-    line2 = ax1.plot(gen, avg, "r-", label="Average")
+        lns = line1 + line2
+        labs = [l.get_label() for l in lns]
+        ax1.legend(lns, labs, loc="center right")
 
-    lns = line1 + line2
-    labs = [l.get_label() for l in lns]
-    ax1.legend(lns, labs, loc="center right")
+        # plt.show()
 
-    plt.show()
-
-    # print log
-    return pop, log, hof
+        # print log
+        return pop
+    else:
+        return [toolbox.repair(ind) for ind in pop]
 
 
 if __name__ == "__main__":
-    pop, log, hof = main()
-    print(len(pop))
-    print(
-        pd.DataFrame({"x": [str(x) for x in pop], "fitness": [x.fitness for x in pop]})
-    )
+        pop = main()
+        print(len(pop))
+        print(
+            pd.DataFrame({"x": [str(x) for x in pop], "fitness": [x.fitness for x in pop]})
+        )
