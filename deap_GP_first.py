@@ -158,13 +158,22 @@ def evalSymbReg(individual, points_x, points_y):
         return (float("inf"),)
 
 
+def make_offspring(population, toolbox, lambda_):
+    offspring = []
+    for i in range(lambda_):
+        parent1, parent2 = tools.selTournament(population, 2, 2)
+        child, _ = toolbox.mate(toolbox.clone(parent1), toolbox.clone(parent2))
+        del child.fitness.values
+        (child,) = toolbox.mutate(child)
+        offspring.append(child)
+    return offspring
+
+
 def eaMuPlusLambda(
     population,
     toolbox,
     mu,
     lambda_,
-    cxpb,
-    mutpb,
     ngen,
     stats=None,
     halloffame=None,
@@ -189,18 +198,10 @@ def eaMuPlusLambda(
 
     # Begin the generational process
     for gen in range(1, ngen + 1):
-        print("\nGEN", gen)
-        print("POPULATION")
-        for i in sorted(population, key=lambda x: str(x)):
-            print(i)
 
         # Vary the population
-        offspring = algorithms.varOr(population, toolbox, lambda_, cxpb, mutpb)
+        offspring = make_offspring(population, toolbox, lambda_)
         offspring = [toolbox.repair(ind) for ind in offspring]
-
-        print("OFFSPRING")
-        for i in sorted(offspring, key=lambda x: str(x)):
-            print(i)
 
         # Evaluate the individuals with an invalid fitness
         for ind in offspring:
@@ -279,8 +280,6 @@ def main():
         toolbox,
         mu=mu,
         lambda_=5,
-        cxpb=0.5,
-        mutpb=0.5,
         ngen=100,
         stats=None,
         halloffame=hof,
