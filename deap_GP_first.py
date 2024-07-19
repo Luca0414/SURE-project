@@ -245,7 +245,7 @@ toolbox.register("repair", repair, points_x=points_x, points_y=points_y)
 toolbox.register("select", tools.selTournament, tournsize=3)
 toolbox.register("mate", gp.cxOnePoint)
 toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
-toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
+toolbox.register("mutate", mutation, expr=toolbox.expr_mut, pset=pset)
 
 toolbox.decorate("mate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
 toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
