@@ -136,7 +136,6 @@ def evalSymbReg(individual, points_x, points_y):
     try:
         # Create model, fit (run) it, give estimates from it]
         func = gp.compile(individual, pset)
-
         y_estimates = pd.Series([func(**x) for _, x in points_x.iterrows()])
 
         # Calc errors using an improved normalised mean squared
@@ -177,30 +176,35 @@ def eaMuPlusLambda(
     logbook.header = ["gen", "nevals"] + (stats.fields if stats else [])
 
     # Evaluate the individuals with an invalid fitness
-    invalid_ind = [ind for ind in population if not ind.fitness.valid]
-    fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
-    for ind, fit in zip(invalid_ind, fitnesses):
-        ind.fitness.values = fit
+    for ind in population:
+        ind.fitness.values = toolbox.evaluate(ind)
 
     if halloffame is not None:
         halloffame.update(population)
 
     record = stats.compile(population) if stats is not None else {}
-    logbook.record(gen=0, nevals=len(invalid_ind), **record)
+    logbook.record(gen=0, nevals=len(population), **record)
     if verbose:
         print(logbook.stream)
 
     # Begin the generational process
     for gen in range(1, ngen + 1):
+        print("\nGEN", gen)
+        print("POPULATION")
+        for i in sorted(population, key=lambda x: str(x)):
+            print(i)
+
         # Vary the population
         offspring = algorithms.varOr(population, toolbox, lambda_, cxpb, mutpb)
-        # offspring = [toolbox.repair(ind) for ind in offspring]
+        offspring = [toolbox.repair(ind) for ind in offspring]
+
+        print("OFFSPRING")
+        for i in sorted(offspring, key=lambda x: str(x)):
+            print(i)
 
         # Evaluate the individuals with an invalid fitness
-        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
-        for ind, fit in zip(invalid_ind, fitnesses):
-            ind.fitness.values = fit
+        for ind in offspring:
+            ind.fitness.values = toolbox.evaluate(ind)
 
         # Update the hall of fame with the generated individuals
         if halloffame is not None:
@@ -211,7 +215,7 @@ def eaMuPlusLambda(
 
         # Update the statistics with the new population
         record = stats.compile(population) if stats is not None else {}
-        logbook.record(gen=gen, nevals=len(invalid_ind), **record)
+        logbook.record(gen=gen, nevals=len(offspring), **record)
         if verbose:
             print(logbook.stream)
 
@@ -229,20 +233,21 @@ print(solution, evalSymbReg(solution, points_x, points_y))
 def mutation(individual, expr, pset):
     choice = random.randint(0, 3)
     if choice == 0:
-        return gp.mutUniform(individual, expr, pset)
+        mutated = gp.mutUniform(toolbox.clone(individual), expr, pset)
     elif choice == 1:
-        return gp.mutNodeReplacement(individual, pset)
+        mutated = gp.mutNodeReplacement(toolbox.clone(individual), pset)
     elif choice == 2:
-        return gp.mutInsert(individual, pset)
+        mutated = gp.mutInsert(toolbox.clone(individual), pset)
     elif choice == 3:
-        return gp.mutShrink(individual)
+        mutated = gp.mutShrink(toolbox.clone(individual))
     else:
-        return (individual,)
+        raise ValueError("Invalid mutation choice")
+    return mutated
 
 
 toolbox.register("evaluate", evalSymbReg, points_x=points_x, points_y=points_y)
 toolbox.register("repair", repair, points_x=points_x, points_y=points_y)
-toolbox.register("select", tools.selTournament, tournsize=3)
+toolbox.register("select", tools.selBest)
 toolbox.register("mate", gp.cxOnePoint)
 toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
 toolbox.register("mutate", mutation, expr=toolbox.expr_mut, pset=pset)
@@ -276,7 +281,7 @@ def main():
         lambda_=5,
         cxpb=0.5,
         mutpb=0.5,
-        ngen=20,
+        ngen=100,
         stats=None,
         halloffame=hof,
         verbose=True,
