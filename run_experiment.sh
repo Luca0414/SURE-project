@@ -56,7 +56,7 @@ noise_levels=(0 0.1 0.2 0.3)
 
 
 for eq in "${equations[@]}"; do
-    for seed in $(seq 1 $seeds); do #use arrayjob
+    for seed in $(seq 1 $seeds); do
         for op in "$operators1" "$operators2" "$operators3"; do
             for dp in "${data_points[@]}"; do
                 for noise in "${noise_levels[@]}"; do
