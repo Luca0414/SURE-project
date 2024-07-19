@@ -46,18 +46,25 @@ pset.addPrimitive(sub, 2)
 pset.addPrimitive(mul, 2)
 pset.addPrimitive(truediv, 2)
 pset.addPrimitive(negative, 1)
-pset.addEphemeralConstant("rand101", partial(random.randint, -1, 1))
+# Having this in breaks the repair operator, because it can remove the intercept
+# pset.addEphemeralConstant("rand101", partial(random.randint, -1, 1))
 pset.renameArguments(ARG0="x")
 
-# pset.addPrimitive(sin, 1)
-# pset.addPrimitive(cos, 1)
-# pset.addPrimitive(tan, 1)
-# pset.addPrimitive(exp, 1)
-# pset.addPrimitive(log, 1)
-# pset.addPrimitive(power, 2)
-# pset.addPrimitive(sinh, 1)
-# pset.addPrimitive(cosh, 1)
-# pset.addPrimitive(tanh, 1)
+
+def reciprocal(x):
+    return 1 / x
+
+
+pset.addPrimitive(reciprocal, 1)
+pset.addPrimitive(sin, 1)
+pset.addPrimitive(cos, 1)
+pset.addPrimitive(tan, 1)
+pset.addPrimitive(exp, 1)
+pset.addPrimitive(log, 1)
+pset.addPrimitive(power, 2)
+pset.addPrimitive(sinh, 1)
+pset.addPrimitive(cosh, 1)
+pset.addPrimitive(tanh, 1)
 
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
@@ -69,16 +76,68 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 toolbox.register("compile", gp.compile, pset=pset)
 
 
-def evalSymbReg(individual, points_x, points_y):
-    print("INDIVIDUAL", individual)
-    points_x["y"] = points_y
+def split(individual):
+    if len(individual) > 1:
+        terms = []
+        # Recurse over children if add/sub
+        if individual[0].name in ["add", "sub"]:
+            terms.extend(
+                split(
+                    creator.Individual(
+                        gp.PrimitiveTree(
+                            individual[
+                                individual.searchSubtree(1)
+                                .start : individual.searchSubtree(1)
+                                .stop
+                            ]
+                        )
+                    )
+                )
+            )
+            terms.extend(
+                split(
+                    creator.Individual(
+                        gp.PrimitiveTree(individual[individual.searchSubtree(1).stop :])
+                    )
+                )
+            )
+        else:
+            terms.append(individual)
+        return terms
+    return [individual]
+
+
+def repair(individual, points_x, points_y):
+    eq = f"y ~ {' + '.join(str(x) for x in split(individual))}"
+    df = pd.concat((points_x, points_y.rename("y")), axis=1)
     try:
         # Create model, fit (run) it, give estimates from it]
-        model = smf.ols(f"y ~ {individual}", points_x)
+        model = smf.ols(eq, df)
         res = model.fit()
-        y_estimates = res.predict(points_x)
+        y_estimates = res.predict(df)
 
-        print(pd.concat([points_x, y_estimates], axis=1))
+        eqn = f"{res.params['Intercept']}"
+        for term, coefficient in res.params.items():
+            if term != "Intercept":
+                eqn = f"add({eqn}, mul({coefficient}, {term}))"
+        repaired = type(individual)(gp.PrimitiveTree.from_string(eqn, pset))
+        return repaired
+    except (
+        OverflowError,
+        ValueError,
+        ZeroDivisionError,
+        statsmodels.tools.sm_exceptions.MissingDataError,
+        patsy.PatsyError,
+    ) as e:
+        return individual
+
+
+def evalSymbReg(individual, points_x, points_y):
+    try:
+        # Create model, fit (run) it, give estimates from it]
+        func = gp.compile(individual, pset)
+
+        y_estimates = pd.Series([func(**x) for _, x in points_x.iterrows()])
 
         # Calc errors using an improved normalised mean squared
         sqerrors = (points_y - y_estimates) ** 2
@@ -94,16 +153,77 @@ def evalSymbReg(individual, points_x, points_y):
         ZeroDivisionError,
         statsmodels.tools.sm_exceptions.MissingDataError,
         patsy.PatsyError,
-    ):
-        return (10**100,)
+        RuntimeWarning,
+    ) as e:
+        print(e)
+        return (float("inf"),)
+
+
+def eaMuPlusLambda(
+    population,
+    toolbox,
+    mu,
+    lambda_,
+    cxpb,
+    mutpb,
+    ngen,
+    stats=None,
+    halloffame=None,
+    verbose=__debug__,
+):
+    population = [toolbox.repair(ind) for ind in population]
+
+    logbook = tools.Logbook()
+    logbook.header = ["gen", "nevals"] + (stats.fields if stats else [])
+
+    # Evaluate the individuals with an invalid fitness
+    invalid_ind = [ind for ind in population if not ind.fitness.valid]
+    fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
+    for ind, fit in zip(invalid_ind, fitnesses):
+        ind.fitness.values = fit
+
+    if halloffame is not None:
+        halloffame.update(population)
+
+    record = stats.compile(population) if stats is not None else {}
+    logbook.record(gen=0, nevals=len(invalid_ind), **record)
+    if verbose:
+        print(logbook.stream)
+
+    # Begin the generational process
+    for gen in range(1, ngen + 1):
+        # Vary the population
+        offspring = algorithms.varOr(population, toolbox, lambda_, cxpb, mutpb)
+        # offspring = [toolbox.repair(ind) for ind in offspring]
+
+        # Evaluate the individuals with an invalid fitness
+        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+        fitnesses = toolbox.map(toolbox.evaluate, invalid_ind)
+        for ind, fit in zip(invalid_ind, fitnesses):
+            ind.fitness.values = fit
+
+        # Update the hall of fame with the generated individuals
+        if halloffame is not None:
+            halloffame.update(offspring)
+
+        # Select the next generation population
+        population[:] = toolbox.select(population + offspring, mu)
+
+        # Update the statistics with the new population
+        record = stats.compile(population) if stats is not None else {}
+        logbook.record(gen=gen, nevals=len(invalid_ind), **record)
+        if verbose:
+            print(logbook.stream)
+
+    return population, logbook
 
 
 points_x = pd.DataFrame({"x": [float(x) for x in range(2, 100)]})
-points_y = pd.Series([x + 5 for x in range(2, 100)])
+points_y = pd.Series([x**2 + x + 5 for x in range(2, 100)])
 
-solution = gp.PrimitiveTree.from_string("sub(1, x)", pset)
+solution = gp.PrimitiveTree.from_string("add(power(x, 2), x)", pset)
+print(repair(solution, points_x, points_y))
 print(solution, evalSymbReg(solution, points_x, points_y))
-assert False
 
 
 def mutation(individual, expr, pset):
@@ -117,14 +237,15 @@ def mutation(individual, expr, pset):
     elif choice == 3:
         return gp.mutShrink(individual)
     else:
-        return individual
+        return (individual,)
 
 
 toolbox.register("evaluate", evalSymbReg, points_x=points_x, points_y=points_y)
+toolbox.register("repair", repair, points_x=points_x, points_y=points_y)
 toolbox.register("select", tools.selTournament, tournsize=3)
 toolbox.register("mate", gp.cxOnePoint)
 toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
-toolbox.register("mutate", mutation, expr=toolbox.expr_mut, pset=pset)
+toolbox.register("mutate", gp.mutUniform, expr=toolbox.expr_mut, pset=pset)
 
 toolbox.decorate("mate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
 toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
@@ -132,7 +253,10 @@ toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=
 
 def main():
 
-    pop = toolbox.population(n=10)
+    mu = 20
+
+    pop = toolbox.population(n=mu)
+
     hof = tools.HallOfFame(
         1
     )  # to maintain some individuals if using ea/ga that deletes old population on each generation
@@ -145,15 +269,15 @@ def main():
     mstats.register("min", np.min)
     mstats.register("max", np.max)
 
-    pop, log = algorithms.eaMuPlusLambda(
+    pop, log = eaMuPlusLambda(
         pop,
         toolbox,
-        mu=10,
+        mu=mu,
         lambda_=5,
         cxpb=0.5,
         mutpb=0.5,
         ngen=20,
-        stats=stats_fit,
+        stats=None,
         halloffame=hof,
         verbose=True,
     )
