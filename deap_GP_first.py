@@ -236,14 +236,14 @@ print(solution, evalSymbReg(solution, points_x, points_y))
 
 
 def mutation(individual, expr, pset):
-    choice = random.randint(0, 3)
+    choice = random.randint(0, 2)
     if choice == 0:
         mutated = gp.mutUniform(toolbox.clone(individual), expr, pset)
     elif choice == 1:
         mutated = gp.mutNodeReplacement(toolbox.clone(individual), pset)
+    # elif choice == 2:
+    #     mutated = gp.mutInsert(toolbox.clone(individual), pset)
     elif choice == 2:
-        mutated = gp.mutInsert(toolbox.clone(individual), pset)
-    elif choice == 3:
         mutated = gp.mutShrink(toolbox.clone(individual))
     else:
         raise ValueError("Invalid mutation choice")
