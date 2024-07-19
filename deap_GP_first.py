@@ -99,11 +99,105 @@ def evalSymbReg(individual, points_x, points_y):
         return nmse,
 
         # Fitness value of infinite if error - not return 1
-    except (OverflowError, ValueError, ZeroDivisionError):
-        return 10**100,
+    except (
+        OverflowError,
+        ValueError,
+        ZeroDivisionError,
+        statsmodels.tools.sm_exceptions.MissingDataError,
+        patsy.PatsyError,
+        RuntimeWarning,
+    ) as e:
+        print(e)
+        return (float("inf"),)
 
-points_x = [x for x in range(2, 100)]
-points_y = [(math.log(x**5) + (x**3 + x**2 + x**0.5)/math.log(x**3.5) + math.exp(x)) for x in range(2, 100)]
+
+def make_offspring(population, toolbox, lambda_):
+    offspring = []
+    for i in range(lambda_):
+        parent1, parent2 = tools.selTournament(population, 2, 2)
+        child, _ = toolbox.mate(toolbox.clone(parent1), toolbox.clone(parent2))
+        del child.fitness.values
+        (child,) = toolbox.mutate(child)
+        offspring.append(child)
+    return offspring
+
+
+def eaMuPlusLambda(
+    population,
+    toolbox,
+    mu,
+    lambda_,
+    ngen,
+    stats=None,
+    halloffame=None,
+    verbose=__debug__,
+):
+    population = [toolbox.repair(ind) for ind in population]
+
+    logbook = tools.Logbook()
+    logbook.header = ["gen", "nevals"] + (stats.fields if stats else [])
+
+    # Evaluate the individuals with an invalid fitness
+    for ind in population:
+        ind.fitness.values = toolbox.evaluate(ind)
+
+    if halloffame is not None:
+        halloffame.update(population)
+
+    record = stats.compile(population) if stats is not None else {}
+    logbook.record(gen=0, nevals=len(population), **record)
+    if verbose:
+        print(logbook.stream)
+
+    # Begin the generational process
+    for gen in range(1, ngen + 1):
+
+        # Vary the population
+        offspring = make_offspring(population, toolbox, lambda_)
+        offspring = [toolbox.repair(ind) for ind in offspring]
+
+        # Evaluate the individuals with an invalid fitness
+        for ind in offspring:
+            ind.fitness.values = toolbox.evaluate(ind)
+
+        # Update the hall of fame with the generated individuals
+        if halloffame is not None:
+            halloffame.update(offspring)
+
+        # Select the next generation population
+        population[:] = toolbox.select(population + offspring, mu)
+
+        # Update the statistics with the new population
+        record = stats.compile(population) if stats is not None else {}
+        logbook.record(gen=gen, nevals=len(offspring), **record)
+        if verbose:
+            print(logbook.stream)
+
+    return population, logbook
+
+
+points_x = pd.DataFrame({"x": [float(x) for x in range(2, 100)]})
+points_y = pd.Series([x**2 + x + 5 for x in range(2, 100)])
+
+solution = gp.PrimitiveTree.from_string("add(power(x, 2), x)", pset)
+print(repair(solution, points_x, points_y))
+print(solution, evalSymbReg(solution, points_x, points_y))
+
+
+def mutation(individual, expr, pset):
+    choice = random.randint(0, 2)
+    if choice == 0:
+        mutated = gp.mutUniform(toolbox.clone(individual), expr, pset)
+    elif choice == 1:
+        mutated = gp.mutNodeReplacement(toolbox.clone(individual), pset)
+    # elif choice == 2:
+    #     mutated = gp.mutInsert(toolbox.clone(individual), pset)
+    elif choice == 2:
+        mutated = gp.mutShrink(toolbox.clone(individual))
+    else:
+        raise ValueError("Invalid mutation choice")
+    return mutated
+
 
 toolbox.register("evaluate", evalSymbReg, points_x=points_x, points_y=points_y)
 toolbox.register("select", tools.selTournament, tournsize=3)
