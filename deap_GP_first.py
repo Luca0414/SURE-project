@@ -40,7 +40,7 @@ random.seed(1)
 
 warnings.filterwarnings("error")
 
-pset = gp.PrimitiveSet("MAIN", 1)
+pset = gp.PrimitiveSet("MAIN", 2)
 pset.addPrimitive(add, 2)
 pset.addPrimitive(sub, 2)
 pset.addPrimitive(mul, 2)
@@ -85,22 +85,12 @@ def split(individual):
                 split(
                     creator.Individual(
                         gp.PrimitiveTree(
-                            individual[
-                                individual.searchSubtree(1)
-                                .start : individual.searchSubtree(1)
-                                .stop
-                            ]
+                            individual[individual.searchSubtree(1).start : individual.searchSubtree(1).stop]
                         )
                     )
                 )
             )
-            terms.extend(
-                split(
-                    creator.Individual(
-                        gp.PrimitiveTree(individual[individual.searchSubtree(1).stop :])
-                    )
-                )
-            )
+            terms.extend(split(creator.Individual(gp.PrimitiveTree(individual[individual.searchSubtree(1).stop :]))))
         else:
             terms.append(individual)
         return terms
@@ -198,7 +188,6 @@ def eaMuPlusLambda(
 
     # Begin the generational process
     for gen in range(1, ngen + 1):
-
         # Vary the population
         offspring = make_offspring(population, toolbox, lambda_)
         offspring = [toolbox.repair(ind) for ind in offspring]
@@ -223,7 +212,7 @@ def eaMuPlusLambda(
     return population, logbook
 
 
-points_x = pd.DataFrame({"x": [float(x) for x in range(2, 100)]})
+points_x = pd.DataFrame({"x": [float(x) for x in range(2, 100)], "ARG1": [float(x) for x in range(2, 100)]})
 points_y = pd.Series([x**2 + x + 5 for x in range(2, 100)])
 
 solution = gp.PrimitiveTree.from_string("add(power(x, 2), x)", pset)
@@ -258,7 +247,6 @@ toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=
 
 
 def main():
-
     mu = 20
 
     pop = toolbox.population(n=mu)
@@ -312,6 +300,4 @@ def main():
 if __name__ == "__main__":
     pop, log, hof = main()
     print(len(pop))
-    print(
-        pd.DataFrame({"x": [str(x) for x in pop], "fitness": [x.fitness for x in pop]})
-    )
+    print(pd.DataFrame({"x": [str(x) for x in pop], "fitness": [x.fitness for x in pop]}))
