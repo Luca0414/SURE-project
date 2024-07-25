@@ -1,0 +1,12 @@
+truediv(exp(square(sub(ARG0, 1))), add(3.2, square(sub(ARG1, 2.5))))
+2
+mul(mul(mul(exp(neg(ARG0)), cube(ARG0)), cos(ARG0)), mul(sin(ARG0), sub(mul(cos(ARG0), square(sin(ARG0))), 1)))
+1
+truediv(mul(mul(30, sub(ARG0, 1)), sub(ARG2, 1)), mul(square(ARG1), sub(ARG0, 10)))
+3
+mul(mul(6, sin(ARG0)), cos(ARG1))
+2
+add(mul(sub(ARG0, 3), sub(ARG1, 3)), mul(2, sin(mul(sub(ARG0, 4), sub(ARG1, 4)))))
+2
+truediv(sub(add(fourth_power(sub(ARG0, 3)), cube(sub(ARG1, 3))), sub(ARG1, 3)), add(fourth_power(sub(ARG1, 2)), 10))
+2

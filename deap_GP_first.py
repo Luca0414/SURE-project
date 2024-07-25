@@ -6,9 +6,9 @@
 # Accuracy: How many generations for fitness = 0 or if gen > 40 use min nmse - Will have to use two figures to show these two outcomes
 
 # Experiment: 
-# 1. Make 100 equations for each amount of variables + operator level combo. And the benchmarks given: All but salustowicz_2d + unwrapped_ball
+# 1. Make 100 equations for each amount of variables 1-10. And the benchmarks given: All but salustowicz_2d + unwrapped_ball
 # 2. Run 30 different seeds for each version.
-# 2.1 RQ2: Using just add, sub, mul, div, neg + reciprocal. Adding sin, cos, tan, log, root + square. Adding exponential, cube, 4th power, sinh, cosh + tanh. 
+# 2.1 RQ2: one using all operators, one removing 1 operator thats in equation and one removing 2 operator that is in equation
 # 2.2 RQ3: Using 10/100/1000 data points randomly for each variable.
 # 2.3 RQ4: Using noisty data.
 # 3. Run those 150 seeds using just GP.
@@ -18,8 +18,7 @@
 # Syntatic closenose (RQ5?) - have to research
 # If a regression coefficient close to 0 = remove - post processing
 # Re-add 25/50/250/500 data sizes?
-# Justify use of operators + data numbers
-# Look into more than one variable input (Michael looking into it)
+# Move parser to __main__
 # save to json instead of default when using bash
 
 import random
@@ -27,31 +26,18 @@ import warnings
 import patsy
 import argparse
 import statsmodels
+import time
+import json
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
 
-from deap import base, creator, tools, gp, benchmarks
-from numpy import negative, exp, log, sin, cos, tan, sinh, cosh, tanh
+from deap import base, creator, tools, gp
+from numpy import negative, log, sin, cos, tan
 from operator import add, sub, mul, truediv
 
-warnings.filterwarnings("error")
-
-parser = argparse.ArgumentParser(description="Run experiments")
-parser.add_argument('--seed', type=int, required=True, help='Seed to use')
-parser.add_argument('--equation', type=str, required=True, help='Equation to use')
-parser.add_argument('--operator_level', type=int, required=True, help='Operators to include (level)')
-parser.add_argument('--data_points', type=int, required=True, help='Number of data points')
-parser.add_argument('--noise', type=float, required=True, help='Noise level')
-parser.add_argument('--method', type=str, required=True, choices=['GP', 'LR', 'GPLR'], help='Method to use (GP, LR, GPLR)')
-
-args = parser.parse_args()
-
-random.seed(args.seed)
-
-# Define more operators
 def root(x):
     return x ** 0.5
 
@@ -67,40 +53,68 @@ def fourth_power(x):
 def reciprocal(x):
     return 1 / x
 
-pset = gp.PrimitiveSet("MAIN", 1)
-pset.renameArguments(ARG0='x')
+def make_primitive_set():
+    pset = gp.PrimitiveSet("START", args.num_vars)
 
-pset.addPrimitive(add, 2)
-pset.addPrimitive(sub, 2)
-pset.addPrimitive(mul, 2)
-pset.addPrimitive(truediv, 2)
-pset.addPrimitive(negative, 1)
-pset.addPrimitive(reciprocal, 1)
-
-if args.operator_level > 0:
+    pset.addPrimitive(add, 2)
+    pset.addPrimitive(sub, 2)
+    pset.addPrimitive(mul, 2)
+    pset.addPrimitive(truediv, 2)
+    pset.addPrimitive(negative, 1)
     pset.addPrimitive(sin, 1)
     pset.addPrimitive(cos, 1)
     pset.addPrimitive(tan, 1)
     pset.addPrimitive(log, 1)
+    pset.addPrimitive(reciprocal, 1)
     pset.addPrimitive(root, 1)
     pset.addPrimitive(square, 1)
-
-if args.operator_level > 1:
-    pset.addPrimitive(exp, 1)
     pset.addPrimitive(cube, 1)
     pset.addPrimitive(fourth_power, 1)
-    pset.addPrimitive(sinh, 1)
-    pset.addPrimitive(cosh, 1)
-    pset.addPrimitive(tanh, 1)
 
-creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
-creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
+    equation = gp.PrimitiveTree.from_string(args.equation, pset)
 
-toolbox = base.Toolbox()
-toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=1, max_=2)
-toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
-toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-toolbox.register("compile", gp.compile, pset=pset)
+    primitive_functions = [add, sub, mul, truediv, negative, sin, cos, tan, log, reciprocal, root, square, cube, fourth_power]
+    primitive_aritys = [2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    primitive_names = ['add', 'sub', 'mul', 'truediv', 'negative', 'sin', 'cos', 'tan', 'log', 'reciprocal', 'root', 'square', 'cube', 'fourth_power']
+
+    primitives_used = []
+    for node in equation: # Change to use equation
+        if node not in primitives_used and isinstance(node, gp.Primitive) and node.name not in ['sub','add','mul']: # mul because of when using LR
+            primitives_used.append(node)
+
+    if args.operator_level > 0:
+        random_prim_used_1 = primitives_used[random.randint(0, len(primitives_used) - 1)]
+        remove_prim_pos_1 = primitive_names.index(random_prim_used_1.name) 
+
+        primitive_functions.pop(remove_prim_pos_1)
+        primitive_names.pop(remove_prim_pos_1)
+        primitive_aritys.pop(remove_prim_pos_1)
+
+        primitives_used.remove(random_prim_used_1)
+    if args.operator_level > 1:
+        random_prim_used_2 = primitives_used[random.randint(0, len(primitives_used) - 1)]
+        remove_prim_pos_2 = primitive_names.index(random_prim_used_2.name) 
+
+        primitive_functions.pop(remove_prim_pos_2)
+        primitive_names.pop(remove_prim_pos_2)
+        primitive_aritys.pop(remove_prim_pos_2)
+
+        primitives_used.remove(random_prim_used_2)
+    if args.operator_level > 2:
+        random_prim_used_3 = primitives_used[random.randint(0, len(primitives_used) - 1)]
+        remove_prim_pos_3 = primitive_names.index(random_prim_used_3.name) 
+
+        primitive_functions.pop(remove_prim_pos_3)
+        primitive_names.pop(remove_prim_pos_3)
+        primitive_aritys.pop(remove_prim_pos_3)
+
+        primitives_used.remove(random_prim_used_3)
+    
+    pset_final = gp.PrimitiveSet("MAIN", args.num_vars)
+    for index, func in enumerate(primitive_functions):
+        pset_final.addPrimitive(func, primitive_aritys[index])
+
+    return pset_final, gp.compile(equation, pset)
 
 def split(individual):
     if len(individual) > 1:
@@ -121,12 +135,12 @@ def repair(individual, points_x, points_y):
         # Create model, fit (run) it, give estimates from it]
         model = smf.ols(eq, df)
         res = model.fit()
-        y_estimates = res.predict(df)
 
         eqn = f"{res.params['Intercept']}"
         for term, coefficient in res.params.items():
             if term != "Intercept":
                 eqn = f"add({eqn}, mul({coefficient}, {term}))"
+        print
         repaired = type(individual)(gp.PrimitiveTree.from_string(eqn, pset))
         return repaired
     except (
@@ -147,7 +161,7 @@ def evalSymbReg(individual, points_x, points_y):
         # Calc errors using an improved normalised mean squared
         sqerrors = (points_y - y_estimates) ** 2
         mean_squared = sqerrors.sum() / len(points_x)
-        nmse = mean_squared / (points_y.sum() / len(points_y))
+        nmse = mean_squared / len(points_y)
 
         return (nmse,)
 
@@ -172,6 +186,20 @@ def make_offspring(population, toolbox, lambda_):
         (child,) = toolbox.mutate(child)
         offspring.append(child)
     return offspring
+
+def mutation(individual, expr, pset):
+    choice = random.randint(0, 2)
+    if choice == 0:
+        mutated = gp.mutUniform(toolbox.clone(individual), expr, pset)
+    elif choice == 1:
+        mutated = gp.mutNodeReplacement(toolbox.clone(individual), pset)
+    # elif choice == 2:
+    #     mutated = gp.mutInsert(toolbox.clone(individual), pset)
+    elif choice == 2:
+        mutated = gp.mutShrink(toolbox.clone(individual))
+    else:
+        raise ValueError("Invalid mutation choice")
+    return mutated
 
 
 def eaMuPlusLambda(
@@ -229,39 +257,6 @@ def eaMuPlusLambda(
 
     return population, logbook
 
-points_x = pd.DataFrame({"x": [random.randint(-1000,1000) for x in range(args.data_points)]})
-points_y = pd.Series([x**2 + x + 5 + random.gauss(0, args.noise) for x in range(args.data_points)])
-
-solution = gp.PrimitiveTree.from_string("add(square(x), x)", pset)
-print(repair(solution, points_x, points_y))
-print(solution, evalSymbReg(solution, points_x, points_y))
-
-
-def mutation(individual, expr, pset):
-    choice = random.randint(0, 2)
-    if choice == 0:
-        mutated = gp.mutUniform(toolbox.clone(individual), expr, pset)
-    elif choice == 1:
-        mutated = gp.mutNodeReplacement(toolbox.clone(individual), pset)
-    # elif choice == 2:
-    #     mutated = gp.mutInsert(toolbox.clone(individual), pset)
-    elif choice == 2:
-        mutated = gp.mutShrink(toolbox.clone(individual))
-    else:
-        raise ValueError("Invalid mutation choice")
-    return mutated
-
-
-toolbox.register("evaluate", evalSymbReg, points_x=points_x, points_y=points_y)
-toolbox.register("repair", repair, points_x=points_x, points_y=points_y)
-toolbox.register("select", tools.selBest)
-toolbox.register("mate", gp.cxOnePoint)
-toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
-toolbox.register("mutate", mutation, expr=toolbox.expr_mut, pset=pset)
-
-toolbox.decorate("mate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
-toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
-
 
 def main():
     mu = 20
@@ -308,15 +303,100 @@ def main():
 
         # plt.show()
 
-        # print log
         return pop
     else:
-        return [toolbox.repair(ind) for ind in pop]
+        pop = [toolbox.repair(ind) for ind in pop]
+        for ind in pop:
+            ind.fitness.values = toolbox.evaluate(ind)
+
+        return pop
 
 
 if __name__ == "__main__":
-        pop = main()
-        print(len(pop))
-        print(
-            pd.DataFrame({"x": [str(x) for x in pop], "fitness": [x.fitness for x in pop]})
-        )
+    start_time = time.time()
+
+    warnings.filterwarnings("error")
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--seed', type=int, required=True)
+    parser.add_argument('--equation', type=str, required=True)
+    parser.add_argument('--operator_level', type=int, required=True)
+    parser.add_argument('--data_points', type=int, required=True)
+    parser.add_argument('--noise', type=float, required=True)
+    parser.add_argument('--method', type=str, required=True, choices=['GP', 'LR', 'GPLR'])
+    parser.add_argument('--num_vars', type=int, required=True)
+
+    args = parser.parse_args()
+
+    random.seed(args.seed)
+
+    pset, equation = make_primitive_set()
+
+    data = {}
+    valid_results = []
+    num_deletes = 0
+
+    for i in range(args.num_vars):
+        column_name = f"ARG{i}"
+        data[column_name] = [random.randint(2, 225) for _ in range(args.data_points)]
+
+    points_x_temp = pd.DataFrame(data)
+
+    for row in range(args.data_points):
+        try:
+            valid_results.append(equation(*points_x_temp.iloc[row]))
+        except Exception as e:
+            print(e)
+            print(row)
+            num_deletes += 1
+            for i in range(args.num_vars):
+                column_name = f"ARG{i}"
+                data[column_name].pop(row-num_deletes)
+    
+    points_x = pd.DataFrame(data)
+    points_y = pd.Series(valid_results)
+
+    creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
+    creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
+
+    toolbox = base.Toolbox()
+    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=1, max_=2)
+    toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+    toolbox.register("evaluate", evalSymbReg, points_x=points_x, points_y=points_y)
+    toolbox.register("repair", repair, points_x=points_x, points_y=points_y)
+    toolbox.register("select", tools.selBest)
+    toolbox.register("mate", gp.cxOnePoint)
+    toolbox.register("expr_mut", gp.genFull, min_=0, max_=2)
+    toolbox.register("mutate", mutation, expr=toolbox.expr_mut, pset=pset)
+
+    toolbox.decorate("mate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
+    toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
+
+    pop = main()
+
+    output = {
+        "equation": args.equation,
+        "num_vars": args.num_vars,
+        "pset": [prim.name for prim in list(pset.primitives.values())[0]],
+        "num_data_points": args.data_points,
+        "noise": args.noise,
+        "method": args.method,
+        "runtime": time.time() - start_time,
+        "population": [str(x) for x in pop],
+        "fitnesses": [x.fitness.values[0] for x in pop]
+    }
+
+    filename = 'results.json'
+
+    try:
+        with open(filename, 'r') as file:
+            existing_data = json.load(file)
+    except:
+        existing_data = []
+
+    existing_data.append(output)
+
+    with open(filename, 'w') as file:
+        json.dump(existing_data, file, indent=4)
