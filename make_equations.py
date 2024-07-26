@@ -52,4 +52,5 @@ for n_var in range(1,11):
             f.write(str(ind) + "\n" + str(n_var) + "\n")
 
     # Create another GP that makes sure all Args are added properly
+    # It adds test data to check for erros maybe?
 

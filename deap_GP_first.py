@@ -18,8 +18,6 @@
 # Syntatic closenose (RQ5?) - have to research
 # If a regression coefficient close to 0 = remove - post processing
 # Re-add 25/50/250/500 data sizes?
-# Move parser to __main__
-# save to json instead of default when using bash
 
 import random
 import warnings
@@ -35,7 +33,7 @@ import pandas as pd
 import statsmodels.formula.api as smf
 
 from deap import base, creator, tools, gp
-from numpy import negative, log, sin, cos, tan
+from numpy import negative, log, sin, cos, tan, exp
 from operator import add, sub, mul, truediv
 
 def root(x):
@@ -149,6 +147,7 @@ def repair(individual, points_x, points_y):
         ZeroDivisionError,
         statsmodels.tools.sm_exceptions.MissingDataError,
         patsy.PatsyError,
+        np.core._exceptions._UFuncOutputCastingError
     ) as e:
         return individual
 
@@ -157,6 +156,9 @@ def evalSymbReg(individual, points_x, points_y):
         # Create model, fit (run) it, give estimates from it]
         func = gp.compile(individual, pset)
         y_estimates = pd.Series([func(**x) for _, x in points_x.iterrows()])
+        for estimate in y_estimates:
+            if np.iscomplex(estimate):
+                raise ValueError("Estimate is Complex")
 
         # Calc errors using an improved normalised mean squared
         sqerrors = (points_y - y_estimates) ** 2
@@ -338,7 +340,7 @@ if __name__ == "__main__":
 
     for i in range(args.num_vars):
         column_name = f"ARG{i}"
-        data[column_name] = [random.randint(2, 225) for _ in range(args.data_points)]
+        data[column_name] = [random.randint(2, 100) for _ in range(args.data_points)]
 
     points_x_temp = pd.DataFrame(data)
 
@@ -400,3 +402,5 @@ if __name__ == "__main__":
 
     with open(filename, 'w') as file:
         json.dump(existing_data, file, indent=4)
+
+    print(pd.DataFrame({"x": [str(x) for x in pop], "fitness": [x.fitness for x in pop]}))

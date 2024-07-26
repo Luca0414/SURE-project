@@ -7,7 +7,7 @@ run_gp() {
     dp=$4
     noise=$5
     nv=$6
-    python3 deap_GP_first.py --seed $seed --equation "$eq" --operator_level $op --data_points $dp --noise $noise --method "GP" --num_vars $nv
+    srun run_bessemer.sh --seed $seed --equation "$eq" --operator_level $op --data_points $dp --noise $noise --method "GP" --num_vars $nv
 }
 
 run_lr() {
@@ -17,7 +17,7 @@ run_lr() {
     dp=$4
     noise=$5
     nv=$6
-    python3 deap_GP_first.py --seed $seed --equation "$eq" --operator_level $op --data_points $dp --noise $noise --method "LR" --num_vars $nv
+    srun run_bessemer.sh --seed $seed --equation "$eq" --operator_level $op --data_points $dp --noise $noise --method "LR" --num_vars $nv
 }
 
 run_gplr() {
@@ -27,7 +27,7 @@ run_gplr() {
     dp=$4
     noise=$5
     nv=$6
-    python3 deap_GP_first.py --seed $seed --equation "$eq" --operator_level $op --data_points $dp --noise $noise --method "GPLR" --num_vars $nv
+    srun run_bessemer.sh --seed $seed --equation "$eq" --operator_level $op --data_points $dp --noise $noise --method "GPLR" --num_vars $nv
 }
 
 equations=()
