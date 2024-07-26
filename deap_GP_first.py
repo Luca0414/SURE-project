@@ -21,6 +21,7 @@
 import random
 import warnings
 import patsy
+import argparse
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -35,36 +36,49 @@ from numpy import negative, exp, power, log, sin, cos, tan, sinh, cosh, tanh
 
 from operator import attrgetter, add, sub, mul, truediv
 
-random.seed(1)
+random.seed(2)
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--num_vars', type=int, required=True)
+parser.add_argument('--data_points', type=int, required=True)
+parser.add_argument('--equation', type=str, required=True)
 
-warnings.filterwarnings("error")
+args = parser.parse_args()
 
-pset = gp.PrimitiveSet("MAIN", 2)
-pset.addPrimitive(add, 2)
-pset.addPrimitive(sub, 2)
-pset.addPrimitive(mul, 2)
-pset.addPrimitive(truediv, 2)
-pset.addPrimitive(negative, 1)
-# Having this in breaks the repair operator, because it can remove the intercept
-# pset.addEphemeralConstant("rand101", partial(random.randint, -1, 1))
-pset.renameArguments(ARG0="x")
+def root(x):
+    return x ** 0.5
 
+def square(x):
+    return x ** 2
+
+def cube(x):
+    return x ** 3
+
+def fourth_power(x):
+    return x ** 4
 
 def reciprocal(x):
     return 1 / x
 
 
-pset.addPrimitive(reciprocal, 1)
+warnings.filterwarnings("error")
+
+pset = gp.PrimitiveSet("MAIN", args.num_vars)
+
+pset.addPrimitive(add, 2)
+pset.addPrimitive(sub, 2)
+pset.addPrimitive(mul, 2)
+pset.addPrimitive(truediv, 2)
+pset.addPrimitive(negative, 1)
 pset.addPrimitive(sin, 1)
 pset.addPrimitive(cos, 1)
 pset.addPrimitive(tan, 1)
-pset.addPrimitive(exp, 1)
 pset.addPrimitive(log, 1)
-pset.addPrimitive(power, 2)
-pset.addPrimitive(sinh, 1)
-pset.addPrimitive(cosh, 1)
-pset.addPrimitive(tanh, 1)
+pset.addPrimitive(reciprocal, 1)
+pset.addPrimitive(root, 1)
+pset.addPrimitive(square, 1)
+pset.addPrimitive(cube, 1)
+pset.addPrimitive(fourth_power, 1)
 
 creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 creator.create("Individual", gp.PrimitiveTree, fitness=creator.FitnessMin)
@@ -211,24 +225,40 @@ def eaMuPlusLambda(
 
     return population, logbook
 
+data = {}
+valid_results = []
+num_deletes = 0
 
-points_x = pd.DataFrame({"x": [float(x) for x in range(2, 100)], "ARG1": [float(x) for x in range(2, 100)]})
-points_y = pd.Series([x**2 + x + 5 for x in range(2, 100)])
+for i in range(args.num_vars):
+    column_name = f"ARG{i}"
+    data[column_name] = [random.randint(2, 225) for _ in range(args.data_points)]
 
-solution = gp.PrimitiveTree.from_string("add(power(x, 2), x)", pset)
-print(repair(solution, points_x, points_y))
-print(solution, evalSymbReg(solution, points_x, points_y))
+points_x_temp = pd.DataFrame(data)
+
+for row in range(args.data_points):
+    try:
+        valid_results.append(gp.compile(gp.PrimitiveTree.from_string(args.equation, pset), pset)(*points_x_temp.iloc[row]))
+    except Exception as e:
+        print(e)
+        print(row)
+        num_deletes += 1
+        for i in range(args.num_vars):
+            column_name = f"ARG{i}"
+            data[column_name].pop(row-num_deletes)
+
+points_x = pd.DataFrame(data)
+points_y = pd.Series(valid_results)
 
 
 def mutation(individual, expr, pset):
-    choice = random.randint(0, 3)
+    choice = random.randint(0, 2)
     if choice == 0:
         mutated = gp.mutUniform(toolbox.clone(individual), expr, pset)
     elif choice == 1:
         mutated = gp.mutNodeReplacement(toolbox.clone(individual), pset)
+    # elif choice == 2:
+    #     mutated = gp.mutInsert(toolbox.clone(individual), pset)
     elif choice == 2:
-        mutated = gp.mutInsert(toolbox.clone(individual), pset)
-    elif choice == 3:
         mutated = gp.mutShrink(toolbox.clone(individual))
     else:
         raise ValueError("Invalid mutation choice")
@@ -254,6 +284,8 @@ def main():
     hof = tools.HallOfFame(
         1
     )  # to maintain some individuals if using ea/ga that deletes old population on each generation
+
+    # add a GP to make_equations that adds data to check for erros maybe?
 
     stats_fit = tools.Statistics(lambda ind: ind.fitness.values)
     stats_size = tools.Statistics(len)
