@@ -138,7 +138,6 @@ def repair(individual, points_x, points_y):
         for term, coefficient in res.params.items():
             if term != "Intercept":
                 eqn = f"add({eqn}, mul({coefficient}, {term}))"
-        print
         repaired = type(individual)(gp.PrimitiveTree.from_string(eqn, pset))
         return repaired
     except (
@@ -147,8 +146,10 @@ def repair(individual, points_x, points_y):
         ZeroDivisionError,
         statsmodels.tools.sm_exceptions.MissingDataError,
         patsy.PatsyError,
-        np.core._exceptions._UFuncOutputCastingError
+        np.core._exceptions._UFuncOutputCastingError,
+        np.linalg.LinAlgError
     ) as e:
+        # print(e)
         return individual
 
 def evalSymbReg(individual, points_x, points_y):
@@ -261,7 +262,7 @@ def eaMuPlusLambda(
 
 
 def main():
-    mu = 20
+    mu = 100
 
     pop = toolbox.population(n=mu)
     if args.method == 'GP' or args.method == 'GPLR':
@@ -279,8 +280,8 @@ def main():
             pop,
             toolbox,
             mu=mu,
-            lambda_=5,
-            ngen=100,
+            lambda_=50,
+            ngen=125,
             stats=None,
             halloffame=hof,
             verbose=True,
