@@ -347,7 +347,8 @@ if __name__ == "__main__":
 
     for row in range(args.data_points):
         try:
-            valid_results.append(equation(*points_x_temp.iloc[row]))
+            y_value = equation(*points_x_temp.iloc[row])
+            valid_results.append(y_value + random.gauss(0, (args.noise * y_value)))
         except Exception as e:
             print(e)
             print(row)
@@ -388,7 +389,7 @@ if __name__ == "__main__":
         "method": args.method,
         "runtime": time.time() - start_time,
         "population": [str(x) for x in pop],
-        "fitnesses": [x.fitness.values[0] for x in pop]
+        "fitnesses": [x.fitness.values[0] for x in pop if x.fitness.values[0] != float("inf")]
     }
 
     filename = 'results.json'
