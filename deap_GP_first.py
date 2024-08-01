@@ -1,9 +1,7 @@
 # RQ1: To what extent does the use of GP for linear regression create a more accurate computational model than pure GP or linear regression?
-# RQ2: How does changing the operators used affect the accuracy of our computational model?
+# RQ2: How does changing the operators used affect the accuracy of our computational model? ---- Omitted for SURE outputs (data is there though)
 # RQ3: How does changing the size of the data set used affect the accuracy of our computational model?
 # RQ4: How does the use of a noisy data set affect the accuracy of our computational model?
-
-# Accuracy: How many generations for fitness = 0 or if gen > 40 use min nmse - Will have to use two figures to show these two outcomes
 
 # Experiment: 
 # 1. Make 100 equations for each amount of variables 1-10. And the benchmarks given: All but salustowicz_2d + unwrapped_ball
@@ -18,6 +16,7 @@
 # Syntatic closenose (RQ5?) - have to research
 # If a regression coefficient close to 0 = remove - post processing
 # Re-add 25/50/250/500 data sizes?
+# Accuracy: How many generations for fitness = 0 or if gen > 40 use min nmse - Will have to use two figures to show these two outcomes
 
 import random
 import warnings
@@ -33,7 +32,7 @@ import pandas as pd
 import statsmodels.formula.api as smf
 
 from deap import base, creator, tools, gp
-from numpy import negative, log, sin, cos, tan, exp
+from numpy import negative, log, sin, cos, tan
 from operator import add, sub, mul, truediv
 
 def root(x):
@@ -51,6 +50,7 @@ def fourth_power(x):
 def reciprocal(x):
     return 1 / x
 
+# Makes primitive set and compiles equation
 def make_primitive_set():
     pset = gp.PrimitiveSet("START", args.num_vars)
 
@@ -69,16 +69,18 @@ def make_primitive_set():
     pset.addPrimitive(cube, 1)
     pset.addPrimitive(fourth_power, 1)
 
-    equation = gp.PrimitiveTree.from_string(args.equation, pset)
+    equation = gp.PrimitiveTree.from_string(args.equation, pset) # Make equation
 
     primitive_functions = [add, sub, mul, truediv, negative, sin, cos, tan, log, reciprocal, root, square, cube, fourth_power]
     primitive_aritys = [2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     primitive_names = ['add', 'sub', 'mul', 'truediv', 'negative', 'sin', 'cos', 'tan', 'log', 'reciprocal', 'root', 'square', 'cube', 'fourth_power']
 
     primitives_used = []
-    for node in equation: # Change to use equation
-        if node not in primitives_used and isinstance(node, gp.Primitive) and node.name not in ['sub','add','mul']: # mul because of when using LR
+    for node in equation: 
+        if node not in primitives_used and isinstance(node, gp.Primitive) and node.name not in ['sub','add','mul']: # mul because of use in LR
             primitives_used.append(node)
+
+    # Removes some operators that get used in equation
 
     if args.operator_level > 0:
         random_prim_used_1 = primitives_used[random.randint(0, len(primitives_used) - 1)]
@@ -108,6 +110,7 @@ def make_primitive_set():
 
         primitives_used.remove(random_prim_used_3)
     
+    # Remakes primitive set
     pset_final = gp.PrimitiveSet("MAIN", args.num_vars)
     for index, func in enumerate(primitive_functions):
         pset_final.addPrimitive(func, primitive_aritys[index])
@@ -168,7 +171,7 @@ def evalSymbReg(individual, points_x, points_y):
 
         return (nmse,)
 
-        # Fitness value of infinite if error - not return 1
+        # Fitness value of infinite if error
     except (
         OverflowError,
         ValueError,
@@ -197,7 +200,7 @@ def mutation(individual, expr, pset):
     elif choice == 1:
         mutated = gp.mutNodeReplacement(toolbox.clone(individual), pset)
     # elif choice == 2:
-    #     mutated = gp.mutInsert(toolbox.clone(individual), pset)
+    #     mutated = gp.mutInsert(toolbox.clone(individual), pset) -- fix this
     elif choice == 2:
         mutated = gp.mutShrink(toolbox.clone(individual))
     else:
@@ -335,6 +338,8 @@ if __name__ == "__main__":
 
     pset, equation = make_primitive_set()
 
+    # Making data points from equation - in real would be taken as inputs themselves
+
     data = {}
     valid_results = []
     num_deletes = 0
@@ -379,6 +384,8 @@ if __name__ == "__main__":
     toolbox.decorate("mutate", gp.staticLimit(key=lambda x: x.height + 1, max_value=17))
 
     pop = main()
+
+    # Creating output json - change to csv?
 
     output = {
         "equation": args.equation,
