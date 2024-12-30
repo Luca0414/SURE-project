@@ -46,11 +46,7 @@ for n_var in range(1,11):
     toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
-    pop = toolbox.population(n=1)
+    pop = toolbox.population(n=10)
     for ind in pop:
-        with open("small_equations.txt", "a") as f:
+        with open("equations.txt", "a") as f:
             f.write(str(ind) + "\n" + str(n_var) + "\n")
-
-    # Create another GP that makes sure all Args are added properly
-    # It adds test data to check for erros maybe?
-
