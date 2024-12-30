@@ -43,13 +43,13 @@ while IFS= read -r line; do
     fi
 done < small_equations.txt
 
-seeds=30
+seeds=30 # In SURE used 2
 
 # RQ2 configurations
-operator_level=(0 1 2 3)
+operator_level=(0 1 2 3) # In SURE used just 0 1 2
 
 # RQ3 configurations
-data_points=(10 100)
+data_points=(10 100 1000)
 
 # RQ4 configurations
 noise_levels=(0 0.1 0.25)
