@@ -95,9 +95,6 @@ gp_lr_result, gp_lr_time = time_execution(
 gp_seed_result, gp_seed_time = time_execution(
     lambda: gp.run_gp(ngen=100, seeds=[lr_formula], repair=False)
 )
-gp_no_seed_result, gp_no_seed_time = time_execution(
-    lambda: gp.run_gp(ngen=100, seeds=[], repair=False)
-)
 
 result = {
     "raw_target_expression": expression,
@@ -120,11 +117,6 @@ result = {
     "gp_seed_simplified_formula": str(gp.simplify(gp_seed_result)),
     "gp_seed_nrmse": gp.fitness(gp_seed_result)[0],
     "gp_seed_time": gp_seed_time,
-    # Baseline GP (without seed) results
-    "gp_no_seed_raw_formula": str(gp_no_seed_result),
-    "gp_no_seed_simplified_formula": str(gp.simplify(gp_no_seed_result)),
-    "gp_no_seed_nrmse": gp.fitness(gp_no_seed_result)[0],
-    "gp_no_seed_time": gp_no_seed_time,
 }
 
 if args.outfile:
