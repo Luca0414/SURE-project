@@ -6,6 +6,7 @@ import numpy as np
 import random
 import json
 
+
 def root(x):
     return x**0.5
 
@@ -21,7 +22,8 @@ def power_3(x):
 def reciprocal(x):
     return 1 / x
 
-class ExpressionGenerator():
+
+class ExpressionGenerator:
     def __init__(self, n_var, random_seed=0):
         np.random.seed(random_seed)
         random.seed(random_seed)
@@ -51,22 +53,29 @@ class ExpressionGenerator():
         )
         self.toolbox.register("compile", gp.compile, pset=self.pset)
 
-
-
     def make_term(self, var):
         term = self.toolbox.individual()
         _, _, labels = gp.graph(term)
         if var in labels.values():
             return term
         terminals = [
-            k for k, v in labels.items() if isinstance(self.pset.mapping[v], gp.Terminal)
+            k
+            for k, v in labels.items()
+            if isinstance(self.pset.mapping[v], gp.Terminal)
         ]
         index = 0 if len(terminals) == 0 else random.choice(terminals)
         term[index] = self.pset.mapping[var]
         return term
 
-    def generate_training_data(self, individual, size:int, noise_factor:float=None):
-        individual = creator.Individual(gp.PrimitiveTree.from_string(individual, self.pset))
+    def add_noise(self, array, noise_factor):
+        noise = np.zeros(len(array))
+        noise = np.random.uniform(-1, 1, size=array.size) * noise_factor * array
+        return array + noise
+
+    def generate_training_data(self, individual, size: int):
+        individual = creator.Individual(
+            gp.PrimitiveTree.from_string(individual, self.pset)
+        )
         func = self.toolbox.compile(expr=individual)
         data = pd.DataFrame(
             np.random.uniform(0, 100, size=(size, self.n_var)),
@@ -74,11 +83,7 @@ class ExpressionGenerator():
         )
         outputs = np.array([func(**row.to_dict()) for _, row in data.iterrows()])
 
-        noise = np.zeros(len(outputs))
-        if noise_factor is not None:
-            noise = np.random.uniform(-1, 1, size=array.size) * noise_factor * array
-
-        return data, outputs + noise
+        return data, outputs
 
     def generate_expression(self):
         terms = [str(self.make_term(arg)) for arg in self.pset.arguments]
@@ -87,6 +92,7 @@ class ExpressionGenerator():
             lambda acc, term: f"add({acc}, {term})", terms, random.uniform(-10, 10)
         )
         return individual
+
 
 if __name__ == "__main__":
     index = 0
@@ -115,5 +121,5 @@ if __name__ == "__main__":
                 }
             )
             index += 1
-    with open("equations.json", 'w') as f:
+    with open("equations.json", "w") as f:
         json.dump(experimental_runs, f)
