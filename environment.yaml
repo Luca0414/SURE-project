@@ -5,5 +5,5 @@ dependencies:
   - python=3.10
   - pip
   - pip:
-    - causal_testing_framework==9.0.0
+    - causal_testing_framework==9.0.1
     - deap==1.4.1
