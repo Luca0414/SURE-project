@@ -70,11 +70,7 @@ while isnull:
 # Seed the population with the standard LR formula
 features = [f"x{i}" for i in range(args.num_vars)]
 
-result = {
-    "raw_target_expression": expression,
-    "num_vars": args.num_vars,
-    "results": [],
-}
+results = []
 
 for epsilon in args.epsilon:
     print("epsilon", epsilon)
@@ -110,8 +106,6 @@ for epsilon in args.epsilon:
             },
             seed=args.seed,
         )
-        if "simplified_target_expression" not in result:
-            result["simplified_target_expression"] = (str(gp.simplify(expression)),)
 
         gp_lr_result, gp_lr_time = time_execution(
             lambda: gp.run_gp(ngen=100, seeds=[lr_formula])
@@ -120,7 +114,7 @@ for epsilon in args.epsilon:
             lambda: gp.run_gp(ngen=100, seeds=[lr_formula], repair=False)
         )
 
-        result["results"].append(
+        results.append(
             {
                 "epsilon": epsilon,
                 "data_size": data_size,
@@ -141,6 +135,14 @@ for epsilon in args.epsilon:
                 "gp_seed_time": gp_seed_time,
             }
         )
+
+result = {
+    "raw_target_expression": expression,
+    "simplified_target_expression": str(gp.simplify(expression)),
+    "num_vars": args.num_vars,
+    "seed": args.seed,
+    "results": results,
+}
 
 if args.outfile:
     if not os.path.exists(os.path.dirname(args.outfile)):
