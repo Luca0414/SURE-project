@@ -118,6 +118,13 @@ for epsilon in args.epsilon:
             {
                 "epsilon": epsilon,
                 "data_size": data_size,
+                "pset": sorted(
+                    [
+                        k
+                        for k, v in gp.pset.mapping.items()
+                        if isinstance(v, deap.gp.Primitive)
+                    ]
+                ),
                 # Linear regression results
                 "lr_raw_formula": str(lr_formula),
                 "lr_simplified_formula": str(gp.simplify(lr_formula)),
