@@ -19,7 +19,7 @@ def time_execution(fun):
 
 
 parser = argparse.ArgumentParser(
-    prog="LearnEquations",
+    prog="python learn_equations.py",
     description="Learn the equations from the supplied JSON file.",
 )
 parser.add_argument(
@@ -78,14 +78,10 @@ for epsilon in args.epsilon:
     df[outcome] = generator.add_noise(df["outputs"], epsilon / 100)
     for data_size in args.data_size:
         print("data_size", data_size)
-        model, lr_time = time_execution(
-            lambda: smf.ols(f"{outcome} ~ {'+'.join(features)}", df).fit()
-        )
+        model, lr_time = time_execution(lambda: smf.ols(f"{outcome} ~ {'+'.join(features)}", df).fit())
 
         terms = [f"mul({model.params[feature]}, {feature})" for feature in features]
-        lr_formula = reduce(
-            lambda acc, term: f"add({acc}, {term})", terms, model.params["Intercept"]
-        )
+        lr_formula = reduce(lambda acc, term: f"add({acc}, {term})", terms, model.params["Intercept"])
 
         gp = GP(
             df=df.sample(data_size),
@@ -107,24 +103,14 @@ for epsilon in args.epsilon:
             seed=args.seed,
         )
 
-        gp_lr_result, gp_lr_time = time_execution(
-            lambda: gp.run_gp(ngen=100, seeds=[lr_formula])
-        )
-        gp_seed_result, gp_seed_time = time_execution(
-            lambda: gp.run_gp(ngen=100, seeds=[lr_formula], repair=False)
-        )
+        gp_lr_result, gp_lr_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula]))
+        gp_seed_result, gp_seed_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula], repair=False))
 
         results.append(
             {
                 "epsilon": epsilon,
                 "data_size": data_size,
-                "pset": sorted(
-                    [
-                        k
-                        for k, v in gp.pset.mapping.items()
-                        if isinstance(v, deap.gp.Primitive)
-                    ]
-                ),
+                "pset": sorted([k for k, v in gp.pset.mapping.items() if isinstance(v, deap.gp.Primitive)]),
                 # Linear regression results
                 "lr_raw_formula": str(lr_formula),
                 "lr_simplified_formula": str(gp.simplify(lr_formula)),

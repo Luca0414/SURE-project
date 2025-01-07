@@ -162,4 +162,4 @@ cython_debug/
 #.idea/
 
 results/
-configurations.sh
+configurations.txt
