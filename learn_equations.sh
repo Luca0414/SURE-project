@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
-#SBATCH --mem=24000
-#SBATCH --time=8:00:00
+#SBATCH --mem=4000
+#SBATCH --time=2:00:00
 
 echo sbatch learn_equations.sh $@
 
