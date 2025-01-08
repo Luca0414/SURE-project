@@ -7,6 +7,7 @@ from functools import reduce
 import statsmodels.formula.api as smf
 from time import time
 import os
+from stopit import ThreadingTimeout
 
 from causal_testing.estimation.genetic_programming_regression_fitter import GP
 from expression_generator import ExpressionGenerator, root, reciprocal
@@ -106,6 +107,13 @@ for epsilon in args.epsilon:
         gp_lr_result, gp_lr_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula]))
         gp_seed_result, gp_seed_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula], repair=False))
 
+        with ThreadingTimeout(10) as lr_timeout_ctx:
+            lr_simplified_formula = str(gp.simplify(lr_formula))
+        with ThreadingTimeout(10) as gplr_timeout_ctx:
+            gp_lr_simplified_formula = str(gp.simplify(gp_lr_result))
+        with ThreadingTimeout(10) as gp_seed_timeout_ctx:
+            gp_seed_simplified_formula = str(gp.simplify(gp_seed_result))
+
         results.append(
             {
                 "epsilon": epsilon,
@@ -113,17 +121,23 @@ for epsilon in args.epsilon:
                 "pset": sorted([k for k, v in gp.pset.mapping.items() if isinstance(v, deap.gp.Primitive)]),
                 # Linear regression results
                 "lr_raw_formula": str(lr_formula),
-                "lr_simplified_formula": str(gp.simplify(lr_formula)),
+                "lr_simplified_formula": (
+                    lr_simplified_formula if lr_timeout_ctx.state == lr_timeout_ctx.EXECUTED else None
+                ),
                 "lr_nrmse": gp.fitness(lr_formula)[0],
                 "lr_time": lr_time,
                 # Our GP results
                 "gp_lr_raw_formula": str(gp_lr_result),
-                "gp_lr_simplified_formula": str(gp.simplify(gp_lr_result)),
+                "gp_lr_simplified_formula": (
+                    gp_lr_simplified_formula if gplr_timeout_ctx.state == gplr_timeout_ctx.EXECUTED else None
+                ),
                 "gp_lr_nrmse": gp.fitness(gp_lr_result)[0],
                 "gp_lr_time": gp_lr_time,
                 # Baseline GP (with seed) results
                 "gp_seed_raw_formula": str(gp_seed_result),
-                "gp_seed_simplified_formula": str(gp.simplify(gp_seed_result)),
+                "gp_seed_simplified_formula": (
+                    gp_seed_simplified_formula if gp_seed_timeout_ctx.state == gp_seed_timeout_ctx.EXECUTED else None
+                ),
                 "gp_seed_nrmse": gp.fitness(gp_seed_result)[0],
                 "gp_seed_time": gp_seed_time,
             }
