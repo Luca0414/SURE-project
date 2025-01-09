@@ -5,6 +5,7 @@ dependencies:
   - python=3.10
   - pip
   - pip:
-    - causal_testing_framework==9.0.1
+    - causal_testing_framework==9.0.2
     - deap==1.4.1
     - stopit==1.1.2
+    - scikit_posthocs==0.11.2
