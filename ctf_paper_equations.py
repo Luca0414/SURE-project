@@ -9,9 +9,10 @@ from functools import reduce
 
 import json
 import pandas as pd
-import numpy as np
 import statsmodels.formula.api as smf
 import deap
+
+from numpy import log, sqrt, sin, cos, tan, power
 
 from causal_testing.estimation.genetic_programming_regression_fitter import GP
 from expression_generator import root, reciprocal
@@ -25,7 +26,7 @@ def time_execution(fun):
 
 def calculate_nrmse(y_estimates, df_outcome):
     sqerrors = (df_outcome - y_estimates) ** 2
-    nrmse = np.sqrt(sqerrors.sum() / len(df_outcome)) / (df_outcome.max() - df_outcome.min())
+    nrmse = sqrt(sqerrors.sum() / len(df_outcome)) / (df_outcome.max() - df_outcome.min())
 
     if pd.isnull(nrmse) or nrmse.real != nrmse or y_estimates.dtype != df_outcome.dtype:
         return float("inf")
@@ -65,10 +66,10 @@ def gp_fit(df, features, outcome, seed, original_ols_formula):
         extra_operators=[
             (root, 1),
             (reciprocal, 1),
-            (np.sin, 1),
-            (np.cos, 1),
-            (np.tan, 1),
-            (np.log, 1),
+            (sin, 1),
+            (cos, 1),
+            (tan, 1),
+            (log, 1),
         ],
         sympy_conversions={
             "log": lambda x: f"Log({x},-1)",
@@ -144,14 +145,14 @@ for seed in range(30):
         seed,
         """
         β + bs(β, degree=3, df=5) +
-        np.log(avg_rel_sus) + np.power(np.log(avg_rel_sus), 2) +
-        np.log(total_contacts_w) + np.power(np.log(total_contacts_w), 2) +
-        np.log(total_contacts_s) + np.power(np.log(total_contacts_s), 2) +
-        np.log(total_contacts_h) + np.power(np.log(total_contacts_h), 2) +
-        β:np.log(total_contacts_w) +
-        β:np.log(total_contacts_s) +
-        β:np.log(total_contacts_h) +
-        β:np.log(avg_rel_sus)
+        log(avg_rel_sus) + power(log(avg_rel_sus), 2) +
+        log(total_contacts_w) + power(log(total_contacts_w), 2) +
+        log(total_contacts_s) + power(log(total_contacts_s), 2) +
+        log(total_contacts_h) + power(log(total_contacts_h), 2) +
+        β:log(total_contacts_w) +
+        β:log(total_contacts_s) +
+        β:log(total_contacts_h) +
+        β:log(avg_rel_sus)
         """,
     )
     with open(f"ctf_paper_results/covasim_results_s{seed}.json", "w") as f:

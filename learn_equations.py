@@ -1,7 +1,7 @@
 import json
 import argparse
 import pandas as pd
-import numpy as np
+from numpy import sin, cos, tan, log
 import deap
 from functools import reduce
 import statsmodels.formula.api as smf
@@ -100,10 +100,10 @@ for epsilon in args.epsilon:
             extra_operators=[
                 (root, 1),
                 (reciprocal, 1),
-                (np.sin, 1),
-                (np.cos, 1),
-                (np.tan, 1),
-                (np.log, 1),
+                (sin, 1),
+                (cos, 1),
+                (tan, 1),
+                (log, 1),
             ],
             sympy_conversions={
                 "log": lambda x: f"Log({x},-1)",
