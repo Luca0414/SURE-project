@@ -46,6 +46,12 @@ parser.add_argument(
     help="The percentage noise factor. Defaults to 0.",
     nargs="+",
 )
+parser.add_argument(
+    "-E",
+    "--expression",
+    type=str,
+    help="An equation to infer.",
+)
 parser.add_argument("-o", "--outfile", help="Where to save the output.")
 parser.add_argument("-s", "--seed", type=int, default=0, help="Random seed.")
 
@@ -56,17 +62,19 @@ generator = ExpressionGenerator(args.num_vars, args.seed)
 
 full_data_size = max(args.data_size)
 
-
-# Keep trying to generate expressions until we get one that properly evaluates.
-# We may get null values if we have a divide by zero error or something.
-isnull = True
-while isnull:
-    expression = generator.generate_expression()
-    df, outputs = generator.generate_training_data(expression, full_data_size)
-    df["outputs"] = outputs
-    isnull = df.isnull().any().any()
-    print(expression)
-    print(df)
+if args.expression is not None:
+    expression = args.expression
+else:
+    # Keep trying to generate expressions until we get one that properly evaluates.
+    # We may get null values if we have a divide by zero error or something.
+    isnull = True
+    while isnull:
+        expression = generator.generate_expression()
+        df, outputs = generator.generate_training_data(expression, full_data_size)
+        df["outputs"] = outputs
+        isnull = df.isnull().any().any()
+        print(expression)
+        print(df)
 
 # Seed the population with the standard LR formula
 features = [f"x{i}" for i in range(args.num_vars)]
