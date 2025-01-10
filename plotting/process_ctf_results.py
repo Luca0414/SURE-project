@@ -20,7 +20,7 @@ if not os.path.exists("figures"):
 P_ALPHA = 0.05
 
 df = []
-for file in glob("ctf_paper_results/*.json"):
+for file in glob("ctf_example_results/*.json"):
     with open(file) as f:
         log = json.load(f)
         log["file"] = os.path.basename(file).replace(".json", "")

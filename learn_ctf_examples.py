@@ -110,37 +110,37 @@ def gp_fit(df, features, outcome, seed, original_ols_formula):
     }
 
 
-if not os.path.exists("ctf_paper_results"):
-    os.mkdir("ctf_paper_results")
+if not os.path.exists("ctf_example_results"):
+    os.mkdir("ctf_example_results")
 
 for seed in range(30):
     # Poisson
     # L_t ≈ 2i(w + h)
     lt_result = gp_fit(
-        pd.read_csv("ctf_data/poisson_data.csv").astype(float),
+        pd.read_csv("ctf_example_data/poisson_data.csv").astype(float),
         ["width", "height", "intensity"],
         "num_lines_abs",
         seed,
         "I(intensity * (width + height)) - 1",
     )
-    with open(f"ctf_paper_results/poisson_lt_result_s{seed}.json", "w") as f:
+    with open(f"ctf_example_results/poisson_lt_result_s{seed}.json", "w") as f:
         json.dump(lt_result, f)
 
     # Pt ≈ πi^2wh
     pt_result = gp_fit(
-        pd.read_csv("ctf_data/poisson_data.csv").astype(float),
+        pd.read_csv("ctf_example_data/poisson_data.csv").astype(float),
         ["width", "height", "intensity"],
         "num_shapes_abs",
         seed,
         "I(intensity * intensity * width * height) - 1",
     )
-    with open(f"ctf_paper_results/poisson_pt_result_s{seed}.json", "w") as f:
+    with open(f"ctf_example_results/poisson_pt_result_s{seed}.json", "w") as f:
         json.dump(pt_result, f)
 
     # Covasim
     covasim_result = gp_fit(
         # "beta" is a special function in sympy, so rename it "β"
-        pd.read_csv("ctf_data/covasim_data.csv").rename({"beta": "β"}, axis=1),
+        pd.read_csv("ctf_example_data/covasim_data.csv").rename({"beta": "β"}, axis=1),
         ["β", "avg_rel_sus", "avg_contacts_s", "avg_contacts_h", "avg_contacts_w"],
         "cum_infections",
         seed,
@@ -156,5 +156,5 @@ for seed in range(30):
         β:log(avg_rel_sus)
         """,
     )
-    with open(f"ctf_paper_results/covasim_result_s{seed}.json", "w") as f:
+    with open(f"ctf_example_results/covasim_result_s{seed}.json", "w") as f:
         json.dump(covasim_result, f)
