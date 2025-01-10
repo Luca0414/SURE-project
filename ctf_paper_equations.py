@@ -132,7 +132,7 @@ for seed in range(30):
         ["width", "height", "intensity"],
         "num_shapes_abs",
         seed,
-        "I(intensity * intensity * width * height)",
+        "I(intensity * intensity * width * height) - 1",
     )
     with open(f"ctf_paper_results/poisson_pt_result_s{seed}.json", "w") as f:
         json.dump(pt_result, f)
