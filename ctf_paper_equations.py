@@ -134,7 +134,7 @@ for seed in range(30):
         seed,
         "I(intensity * intensity * width * height)",
     )
-    with open(f"ctf_paper_results/poisson_pt_results_s{seed}.json", "w") as f:
+    with open(f"ctf_paper_results/poisson_pt_result_s{seed}.json", "w") as f:
         json.dump(pt_result, f)
 
     # Covasim
@@ -156,5 +156,5 @@ for seed in range(30):
         β:log(avg_rel_sus)
         """,
     )
-    with open(f"ctf_paper_results/covasim_results_s{seed}.json", "w") as f:
+    with open(f"ctf_paper_results/covasim_result_s{seed}.json", "w") as f:
         json.dump(covasim_result, f)
