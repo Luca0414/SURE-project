@@ -37,8 +37,8 @@ def calculate_nrmse(y_estimates, df_outcome):
 def pretty_print_ols(model):
     params_dict = model.params.to_dict()
     formula_str = ""
-    for i, (variable, coef) in enumerate(params_dict.items()):
-        if i == 0:  # Intercept term
+    for variable, coef in params_dict.items():
+        if variable == "Intercept":  # Intercept term
             formula_str += f"{coef:.2f}"
         else:
             if coef >= 0:
@@ -47,7 +47,7 @@ def pretty_print_ols(model):
                 formula_str += f" - {abs(coef):.2f}*{variable}"
 
     # Remove the trailing " + " if it exists
-    formula_str = formula_str.rstrip(" + ")
+    formula_str = formula_str.lstrip(" + ")
 
     # Print the formula with coefficients
     return formula_str
