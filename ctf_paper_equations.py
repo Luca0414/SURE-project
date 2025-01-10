@@ -87,6 +87,7 @@ def gp_fit(df, features, outcome, seed, original_ols_formula):
     return {
         "data_size": len(df),
         "pset": sorted([k for k, v in gp.pset.mapping.items() if isinstance(v, deap.gp.Primitive)]),
+        "num_vars": len(features),
         # Linear regression results
         "lr_raw_formula": str(lr_formula),
         "lr_simplified_formula": str(gp.simplify(lr_formula)),
