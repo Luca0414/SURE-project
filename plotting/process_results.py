@@ -23,11 +23,7 @@ df = []
 problems = []
 for file in glob("results/*.json"):
     with open(file) as f:
-        try:
-            log = json.load(f)
-        except json.decoder.JSONDecodeError:
-            print(file)
-            problems.append(file[8:-5].replace("n", "").replace("s", "").split("_"))
+        log = json.load(f)
     for result in log["results"]:
         result["raw_target_expression"] = log["raw_target_expression"]
         result["simplified_target_expression"] = log["simplified_target_expression"]
@@ -112,8 +108,6 @@ print("\nRuntime")
 lr_time = list(df.groupby("num_vars")["lr_time"].apply(list))
 gp_time = list(df.groupby("num_vars")["gp_seed_time"].apply(list))
 gp_lr_time = list(df.groupby("num_vars")["gp_lr_time"].apply(list))
-
-assert len(lr_time) == 10
 
 plot_grouped_boxplot(
     [lr_time, gp_time, gp_lr_time],
