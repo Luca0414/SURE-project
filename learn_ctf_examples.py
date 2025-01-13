@@ -130,8 +130,8 @@ def gp_fit(df, features, outcome, seed, original_ols_formula, run_ctf):
 
     terms = [f"mul({model.params[feature]}, {feature})" for feature in features]
     lr_formula = reduce(lambda acc, term: f"add({acc}, {term})", terms, model.params["Intercept"])
-    gp_lr_result, gp_lr_time = time_execution(lambda: gp.run_gp(ngen=5, seeds=[lr_formula]))
-    gp_seed_result, gp_seed_time = time_execution(lambda: gp.run_gp(ngen=5, seeds=[lr_formula], repair=False))
+    gp_lr_result, gp_lr_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula]))
+    gp_seed_result, gp_seed_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula], repair=False))
 
     original_test_outcomes = run_ctf(df=df, formula=original_model, pset=gp.pset)
     lr_test_outcomes = run_ctf(df=df, formula=model, pset=gp.pset)
@@ -286,19 +286,19 @@ if __name__ == "__main__":
         os.mkdir(args.outdir)
 
     # Poisson
-    # poisson_data = pd.read_csv("ctf_example_data/poisson_data.csv").astype(float)
-    # poisson_data["num_shapes_unit"] = poisson_data["num_shapes_abs"] / (poisson_data["width"] * poisson_data["height"])
-    # original_estimation_equation = "intensity + I(intensity ** 2) - 1"
-    # pt_result = gp_fit(
-    #     poisson_data,
-    #     ["width", "height", "intensity"],
-    #     "num_shapes_unit",
-    #     args.seed,
-    #     original_estimation_equation,
-    #     run_ctf_poisson,
-    # )
-    # with open(f"{args.outdir}/poisson_result_s{args.seed}.json", "w") as f:
-    #     json.dump(pt_result, f)
+    poisson_data = pd.read_csv("ctf_example_data/poisson_data.csv").astype(float)
+    poisson_data["num_shapes_unit"] = poisson_data["num_shapes_abs"] / (poisson_data["width"] * poisson_data["height"])
+    original_estimation_equation = "intensity + I(intensity ** 2) - 1"
+    pt_result = gp_fit(
+        poisson_data,
+        ["width", "height", "intensity"],
+        "num_shapes_unit",
+        args.seed,
+        original_estimation_equation,
+        run_ctf_poisson,
+    )
+    with open(f"{args.outdir}/poisson_result_s{args.seed}.json", "w") as f:
+        json.dump(pt_result, f)
 
     # Covasim
     covasim_result = gp_fit(
