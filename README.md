@@ -25,5 +25,7 @@ This will submit 300 separate jobs, one for each configuration.
 3. Generate the figures in the paper by running `python plotting/process_results.py`. This will create a directory called `figures` in which it will place the figures and statistical analyses.
 
 ## Running experiments for the Causal Testing Framework example equations
-1. Run `python learn_ctf_examples.py`. This will create a directory called `ctf_example_results`. This will create a directory called `ctf_example_results` containing JSON files that record the output of each run.
+1. Run `python learn_ctf_examples.py -o ctf_example_results -s $seed` for 30 random seeds. This will create a directory called `ctf_example_results`. This will create a directory called `ctf_example_results` containing JSON files that record the output of each run.
+For our paper, we used seeds 1-30. The easiest way to recreate this is by doing `seq 1 300 | xargs -n 1 python learn_ctf_examples.py -o ctf_example_results -s`.
+This can also be run on HPC by modifying `learn_equations.bash` to call `learn_ctf_examples.py`.
 3. Generate the figures in the paper by running `python plotting/process_ctf_results.py`. This will place the figures and statistical analyses within the `figures` directory (first creating the directory if it does not already exist).

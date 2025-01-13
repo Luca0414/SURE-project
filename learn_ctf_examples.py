@@ -3,35 +3,26 @@ This module uses gp to fit equations to the data used in the paper
 "Testing Causality in Scientific Modelling Software" (https://doi.org/10.1145/3607184).
 """
 
-from time import time
 import os
+import argparse
+from time import time
 from functools import reduce
 
 import json
+import deap
 import pandas as pd
 import statsmodels.formula.api as smf
-import deap
-
-from numpy import log, sqrt, sin, cos, tan, power
+from numpy import log, sin, cos, tan, power
 
 from causal_testing.estimation.genetic_programming_regression_fitter import GP
 from expression_generator import root, reciprocal
+from learn_equations import calculate_nrmse
 
 
 def time_execution(fun):
     start_time = time()
     result = fun()
     return result, time() - start_time
-
-
-def calculate_nrmse(y_estimates, df_outcome):
-    sqerrors = (df_outcome - y_estimates) ** 2
-    nrmse = sqrt(sqerrors.sum() / len(df_outcome)) / (df_outcome.max() - df_outcome.min())
-
-    if pd.isnull(nrmse) or nrmse.real != nrmse or y_estimates.dtype != df_outcome.dtype:
-        return float("inf")
-
-    return nrmse
 
 
 def pretty_print_ols(model):
@@ -110,20 +101,40 @@ def gp_fit(df, features, outcome, seed, original_ols_formula):
     }
 
 
-if not os.path.exists("ctf_example_results"):
-    os.mkdir("ctf_example_results")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        prog="python learn_equations.py",
+        description="Learn the equations from the supplied JSON file.",
+    )
+    parser.add_argument(
+        "-s",
+        "--seed",
+        type=int,
+        default=0,
+        help="The random seed.",
+    )
+    parser.add_argument(
+        "-o",
+        "--outdir",
+        type=str,
+        required=True,
+        help="The output directory.",
+    )
+    args = parser.parse_args()
 
-for seed in range(30):
+    if not os.path.exists(args.outdir):
+        os.mkdir(args.outdir)
+
     # Poisson
     # L_t ≈ 2i(w + h)
     lt_result = gp_fit(
         pd.read_csv("ctf_example_data/poisson_data.csv").astype(float),
         ["width", "height", "intensity"],
         "num_lines_abs",
-        seed,
+        args.seed,
         "I(intensity * (width + height)) - 1",
     )
-    with open(f"ctf_example_results/poisson_lt_result_s{seed}.json", "w") as f:
+    with open(f"{args.outdir}/poisson_lt_result_s{args.seed}.json", "w") as f:
         json.dump(lt_result, f)
 
     # Pt ≈ πi^2wh
@@ -131,10 +142,10 @@ for seed in range(30):
         pd.read_csv("ctf_example_data/poisson_data.csv").astype(float),
         ["width", "height", "intensity"],
         "num_shapes_abs",
-        seed,
+        args.seed,
         "I(intensity * intensity * width * height) - 1",
     )
-    with open(f"ctf_example_results/poisson_pt_result_s{seed}.json", "w") as f:
+    with open(f"{args.outdir}/poisson_pt_result_s{args.seed}.json", "w") as f:
         json.dump(pt_result, f)
 
     # Covasim
@@ -143,7 +154,7 @@ for seed in range(30):
         pd.read_csv("ctf_example_data/covasim_data.csv").rename({"beta": "β"}, axis=1),
         ["β", "avg_rel_sus", "avg_contacts_s", "avg_contacts_h", "avg_contacts_w"],
         "cum_infections",
-        seed,
+        args.seed,
         """
         β + bs(β, degree=3, df=5) +
         log(avg_rel_sus) + power(log(avg_rel_sus), 2) +
@@ -156,5 +167,5 @@ for seed in range(30):
         β:log(avg_rel_sus)
         """,
     )
-    with open(f"ctf_example_results/covasim_result_s{seed}.json", "w") as f:
+    with open(f"{args.outdir}/covasim_result_s{args.seed}.json", "w") as f:
         json.dump(covasim_result, f)
