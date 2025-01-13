@@ -14,9 +14,66 @@ import pandas as pd
 import statsmodels.formula.api as smf
 from numpy import log, sin, cos, tan, power
 
+from causal_testing.testing.base_test_case import BaseTestCase
+from causal_testing.testing.causal_test_case import CausalTestCase
+from causal_testing.testing.causal_test_outcome import ExactValue, Positive
 from causal_testing.estimation.genetic_programming_regression_fitter import GP
+from causal_testing.estimation.abstract_estimator import Estimator
+from causal_testing.estimation.linear_regression_estimator import LinearRegressionEstimator
+
 from expression_generator import root, reciprocal
 from learn_equations import calculate_nrmse
+
+
+class GPFormulaEstimator(Estimator):
+    def __init__(
+        self,
+        pset,
+        df,
+        formula,
+        adjustment_set_config,
+        treatment_variable,
+        control_value,
+        treatment_value,
+        outcome_variable,
+    ):
+        super().__init__(
+            treatment=treatment_variable,
+            treatment_value=treatment_value,
+            control_value=control_value,
+            adjustment_set=adjustment_set_config,
+            outcome=outcome_variable,
+            df=df,
+        )
+        self.pset = pset
+        self.formula = formula
+        self.adjustment_set_config = adjustment_set_config
+
+    def add_modelling_assumptions(self):
+        pass
+
+    def _estimate(self):
+        if hasattr(self.formula, "get_prediction"):
+            x = pd.DataFrame(columns=self.df.columns)
+            x["Intercept"] = 1  # self.intercept
+            x[self.treatment] = [self.treatment_value, self.control_value]
+            for k, v in self.adjustment_set_config.items():
+                x[k] = v
+            prediction = self.formula.get_prediction(x).summary_frame()
+            control_outcome, treatment_outcome = prediction.iloc[1]["mean"], prediction.iloc[0]["mean"]
+        else:
+            func = deap.gp.compile(deap.gp.PrimitiveTree.from_string(str(self.formula), self.pset), self.pset)
+            control_outcome = func(**(self.adjustment_set_config | {self.treatment: self.control_value}))
+            treatment_outcome = func(**(self.adjustment_set_config | {self.treatment: self.treatment_value}))
+        return control_outcome, treatment_outcome
+
+    def estimate_ate(self):
+        control_outcome, treatment_outcome = self._estimate()
+        return [treatment_outcome - control_outcome], (None, None)
+
+    def estimate_risk_ratio(self):
+        control_outcome, treatment_outcome = self._estimate()
+        return [treatment_outcome / control_outcome], (None, None)
 
 
 def time_execution(fun):
@@ -44,7 +101,7 @@ def pretty_print_ols(model):
     return formula_str
 
 
-def gp_fit(df, features, outcome, seed, original_ols_formula):
+def gp_fit(df, features, outcome, seed, original_ols_formula, run_ctf):
     original_model, original_model_time = time_execution(
         lambda: smf.ols(f"{outcome} ~ {original_ols_formula}", df).fit()
     )
@@ -68,12 +125,18 @@ def gp_fit(df, features, outcome, seed, original_ols_formula):
         },
         seed=seed,
     )
+
     model, lr_time = time_execution(lambda: smf.ols(f"{outcome} ~ {'+'.join(features)}", df).fit())
 
     terms = [f"mul({model.params[feature]}, {feature})" for feature in features]
     lr_formula = reduce(lambda acc, term: f"add({acc}, {term})", terms, model.params["Intercept"])
-    gp_lr_result, gp_lr_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula]))
-    gp_seed_result, gp_seed_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula], repair=False))
+    gp_lr_result, gp_lr_time = time_execution(lambda: gp.run_gp(ngen=5, seeds=[lr_formula]))
+    gp_seed_result, gp_seed_time = time_execution(lambda: gp.run_gp(ngen=5, seeds=[lr_formula], repair=False))
+
+    original_test_outcomes = run_ctf(df=df, formula=original_model, pset=gp.pset)
+    lr_test_outcomes = run_ctf(df=df, formula=model, pset=gp.pset)
+    gp_lr_test_outcomes = run_ctf(df=df, formula=gp_lr_result, pset=gp.pset)
+    gp_seed_test_outcomes = run_ctf(df=df, formula=gp_seed_result, pset=gp.pset)
 
     return {
         "data_size": len(df),
@@ -83,22 +146,119 @@ def gp_fit(df, features, outcome, seed, original_ols_formula):
         "lr_raw_formula": str(lr_formula),
         "lr_simplified_formula": str(gp.simplify(lr_formula)),
         "lr_nrmse": gp.fitness(lr_formula)[0],
+        "lr_test_outcomes": lr_test_outcomes,
         "lr_time": lr_time,
         # Our GP results
         "gp_lr_raw_formula": str(gp_lr_result),
         "gp_lr_simplified_formula": str(gp.simplify(gp_lr_result)),
         "gp_lr_nrmse": gp.fitness(gp_lr_result)[0],
+        "gp_lr_test_outcomes": gp_lr_test_outcomes,
         "gp_lr_time": gp_lr_time,
         # Baseline GP (with seed) results
         "gp_seed_raw_formula": str(gp_seed_result),
         "gp_seed_simplified_formula": str(gp.simplify(gp_seed_result)),
         "gp_seed_nrmse": gp.fitness(gp_seed_result)[0],
+        "gp_seed_test_outcomes": gp_seed_test_outcomes,
         "gp_seed_time": gp_seed_time,
         # NRMSE of original model
         "original_model_formula": pretty_print_ols(original_model),
         "original_model_nrmse": calculate_nrmse(original_model.predict(df), df[outcome]),
+        "original_test_outcomes": original_test_outcomes,
         "original_model_time": original_model_time,
     }
+
+
+def run_causal_test(
+    df,
+    pset,
+    formula,
+    treatment_variable,
+    control_value,
+    treatment_value,
+    outcome_variable,
+    estimate_type,
+    expected_causal_effect,
+    adjustment_set_config,
+):
+    base_test_case = BaseTestCase(
+        treatment_variable=treatment_variable,
+        outcome_variable=outcome_variable,
+        effect="direct",
+    )
+
+    causal_test_case = CausalTestCase(
+        base_test_case=base_test_case,
+        expected_causal_effect=expected_causal_effect,
+        control_value=control_value,
+        treatment_value=treatment_value,
+        estimate_type=estimate_type,
+    )
+    estimation_model = GPFormulaEstimator(
+        pset=pset,
+        df=df,
+        formula=formula,
+        adjustment_set_config=adjustment_set_config,
+        treatment_variable=treatment_variable,
+        control_value=control_value,
+        treatment_value=treatment_value,
+        outcome_variable=outcome_variable,
+    )
+    causal_test_result = causal_test_case.execute_test(estimation_model, None)
+    return causal_test_result.to_dict(json=True) | {
+        "passed": bool(expected_causal_effect.apply(causal_test_result)),
+        "formula": pretty_print_ols(formula) if hasattr(formula, "params") else str(formula),
+        "adjustment_set": adjustment_set_config,
+    }
+
+
+def run_ctf_poisson(df, formula, pset):
+    return [
+        run_causal_test(
+            df=df,
+            pset=pset,
+            formula=formula,
+            treatment_variable="intensity",
+            control_value=i,
+            treatment_value=2 * i,
+            outcome_variable="num_shapes_unit",
+            estimate_type="risk_ratio",
+            expected_causal_effect=ExactValue(4, 0.5),
+            adjustment_set_config={"width": 1, "height": 1},
+        )
+        for i in [1, 2, 4, 8]
+    ]
+
+
+def run_ctf_covasim(df, formula, pset):
+    return [
+        run_causal_test(
+            df=df,
+            pset=pset,
+            formula=formula,
+            treatment_variable="β",
+            control_value=0.016,
+            treatment_value=0.02672,
+            outcome_variable="cum_infections",
+            estimate_type="ate",
+            expected_causal_effect=Positive(),
+            adjustment_set_config=df.loc[
+                df["location"] == location,
+                ["avg_rel_sus", "total_contacts_h", "total_contacts_s", "total_contacts_w"],
+            ]
+            .mean()
+            .to_dict(),
+        )
+        | {
+            "adjustment_set": df.loc[
+                df["location"] == location,
+                ["avg_rel_sus", "total_contacts_h", "total_contacts_s", "total_contacts_w"],
+            ]
+            .mean()
+            .to_dict()
+            | {"location": location}
+        }
+        for location in set(df["location"])
+    ]
 
 
 if __name__ == "__main__":
@@ -126,33 +286,25 @@ if __name__ == "__main__":
         os.mkdir(args.outdir)
 
     # Poisson
-    # L_t ≈ 2i(w + h)
-    lt_result = gp_fit(
-        pd.read_csv("ctf_example_data/poisson_data.csv").astype(float),
-        ["width", "height", "intensity"],
-        "num_lines_abs",
-        args.seed,
-        "I(intensity * (width + height)) - 1",
-    )
-    with open(f"{args.outdir}/poisson_lt_result_s{args.seed}.json", "w") as f:
-        json.dump(lt_result, f)
-
-    # Pt ≈ πi^2wh
-    pt_result = gp_fit(
-        pd.read_csv("ctf_example_data/poisson_data.csv").astype(float),
-        ["width", "height", "intensity"],
-        "num_shapes_abs",
-        args.seed,
-        "I(intensity * intensity * width * height) - 1",
-    )
-    with open(f"{args.outdir}/poisson_pt_result_s{args.seed}.json", "w") as f:
-        json.dump(pt_result, f)
+    # poisson_data = pd.read_csv("ctf_example_data/poisson_data.csv").astype(float)
+    # poisson_data["num_shapes_unit"] = poisson_data["num_shapes_abs"] / (poisson_data["width"] * poisson_data["height"])
+    # original_estimation_equation = "intensity + I(intensity ** 2) - 1"
+    # pt_result = gp_fit(
+    #     poisson_data,
+    #     ["width", "height", "intensity"],
+    #     "num_shapes_unit",
+    #     args.seed,
+    #     original_estimation_equation,
+    #     run_ctf_poisson,
+    # )
+    # with open(f"{args.outdir}/poisson_result_s{args.seed}.json", "w") as f:
+    #     json.dump(pt_result, f)
 
     # Covasim
     covasim_result = gp_fit(
         # "beta" is a special function in sympy, so rename it "β"
         pd.read_csv("ctf_example_data/covasim_data.csv").rename({"beta": "β"}, axis=1),
-        ["β", "avg_rel_sus", "avg_contacts_s", "avg_contacts_h", "avg_contacts_w"],
+        ["β", "avg_rel_sus", "total_contacts_s", "total_contacts_h", "total_contacts_w"],
         "cum_infections",
         args.seed,
         """
@@ -166,6 +318,7 @@ if __name__ == "__main__":
         β:log(total_contacts_h) +
         β:log(avg_rel_sus)
         """,
+        run_ctf_covasim,
     )
     with open(f"{args.outdir}/covasim_result_s{args.seed}.json", "w") as f:
         json.dump(covasim_result, f)
