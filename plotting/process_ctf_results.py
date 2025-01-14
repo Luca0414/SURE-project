@@ -31,45 +31,77 @@ for file in glob("ctf_example_results/*.json"):
         log["system"] = " ".join(system)
     df.append(log)
 df = pd.DataFrame(df)
-print(df)
 
 # RQ1: Number of variables
 print("NRMSE")
-original_nrmse = list(df.groupby("system")["original_model_nrmse"].apply(list))
-lr_nrmse = list(df.groupby("system")["lr_nrmse"].apply(list))
-gp_nrmse = list(df.groupby("system")["gp_seed_nrmse"].apply(list))
-gp_lr_nrmse = list(df.groupby("system")["gp_lr_nrmse"].apply(list))
-
 plot_grouped_boxplot(
-    [lr_nrmse, gp_nrmse, gp_lr_nrmse, original_nrmse],
+    [
+        list(df.groupby("system")[f"{techique}_nrmse"].apply(list))
+        for techique in ["lr", "gp_seed", "gp_lr", "original_model"]
+    ],
     savepath="figures/ctf_nrmse.png",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR, ORIGINAL],
     colours=[RED, BLUE, GREEN, MAGENTA],
     markers=["x", "o", "+", 2],
     xticklabels=df.groupby("system").groups,
-    xlabel="Number of variables",
+    xlabel="System",
     ylabel="NRMSE",
 )
-compute_stats(df, "num_vars", P_ALPHA, "figures/ctf_nrmse.csv")
+compute_stats(df, "system", P_ALPHA, "figures/ctf_nrmse.csv")
 
 
 # Runtime
 print("\nRuntime")
-original_time = list(df.groupby("system")["original_model_nrmse"].apply(list))
-lr_time = list(df.groupby("system")["lr_time"].apply(list))
-gp_time = list(df.groupby("system")["gp_seed_time"].apply(list))
-gp_lr_time = list(df.groupby("system")["gp_lr_time"].apply(list))
-
 plot_grouped_boxplot(
-    [lr_time, gp_time, gp_lr_time, original_time],
+    [
+        list(df.groupby("system")[f"{techique}_time"].apply(list))
+        for techique in ["lr", "gp_seed", "gp_lr", "original_model"]
+    ],
     savepath="figures/ctf_runtime.png",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR, ORIGINAL],
     colours=[RED, BLUE, GREEN, MAGENTA],
     markers=["x", "o", "+", 2],
     xticklabels=df.groupby("system").groups,
-    xlabel="Number of variables",
+    xlabel="System",
     ylabel="Runtime (seconds)",
 )
-compute_stats(df, "num_vars", P_ALPHA, "figures/ctf_runtime.csv", outcome="time")
+compute_stats(df, "system", P_ALPHA, "figures/ctf_runtime.csv", outcome="time")
+
+# Causal test outcomes
+# No result for "original" since this is the gold standard comparison
+print("\nCausal Effect Estimates")
+for ls in [list(df.groupby("system")[f"{techique}_test_nrmse"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]]:
+    print()
+    for gp in ls:
+        print(gp)
+print()
+
+plot_grouped_boxplot(
+    [list(df.groupby("system")[f"{techique}_test_nrmse"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]],
+    savepath="figures/ctf_test_nrmse.png",
+    width=0.6,
+    labels=[BASELINE_LR, BASELINE_GP, GP_LR],
+    colours=[RED, BLUE, GREEN],
+    markers=["x", "o", "+"],
+    xticklabels=df.groupby("system").groups,
+    xlabel="System",
+    ylabel="Causal Effect Estimate NRSME",
+    showfliers=False,
+)
+compute_stats(df, "system", P_ALPHA, "figures/ctf_test_nrmse.csv", outcome="test_nrmse")
+
+print("\nCausal Test Outcomes")
+plot_grouped_boxplot(
+    [list(df.groupby("system")[f"{techique}_test_bcr"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]],
+    savepath="figures/ctf_test_bcr.png",
+    width=0.6,
+    labels=[BASELINE_LR, BASELINE_GP, GP_LR],
+    colours=[RED, BLUE, GREEN],
+    markers=["x", "o", "+"],
+    xticklabels=df.groupby("system").groups,
+    xlabel="System",
+    ylabel="Test Outcome BCR",
+)
+compute_stats(df, "system", P_ALPHA, "figures/ctf_test_bcr.csv", outcome="test_bcr")

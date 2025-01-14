@@ -90,14 +90,19 @@ def compute_stats(df, groupby, p_alpha, save_path, outcome="nrmse"):
     for gp_inx, stat in stats:
         datum = {groupby: gp_inx, "friedman_pvalue": stat.pvalue}
         if stat.pvalue < p_alpha:
-            nemenyi = posthoc_nemenyi_friedman(
-                df.loc[df[groupby] == gp_inx, [f"lr_{outcome}", f"gp_seed_{outcome}", f"gp_lr_{outcome}"]]
-            )
+            techniques = [f"lr_{outcome}", f"gp_seed_{outcome}", f"gp_lr_{outcome}"]
+            if f"original_model_{outcome}" in df:
+                techniques.append(f"original_model_{outcome}")
+            nemenyi = posthoc_nemenyi_friedman(df.loc[df[groupby] == gp_inx, techniques])
             datum["gp_lr/lr"] = nemenyi[f"gp_lr_{outcome}"][f"lr_{outcome}"]
             datum["gp_lr/gp"] = nemenyi[f"gp_lr_{outcome}"][f"gp_seed_{outcome}"]
+            if f"original_model_{outcome}" in df:
+                datum["gp_lr/original"] = nemenyi[f"gp_lr_{outcome}"][f"original_model_{outcome}"]
         else:
             datum["gp_lr/lr"] = None
             datum["gp_lr/gp"] = None
+            if f"original_model_{outcome}" in df:
+                datum["gp_lr/original"] = None
         stats_data.append(datum)
     stats_data = pd.DataFrame(stats_data)
     stats_data.to_csv(save_path)

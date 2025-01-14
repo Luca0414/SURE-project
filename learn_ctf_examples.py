@@ -13,13 +13,13 @@ import deap
 import pandas as pd
 import statsmodels.formula.api as smf
 from numpy import log, sin, cos, tan, power
+from sklearn.metrics import balanced_accuracy_score
 
 from causal_testing.testing.base_test_case import BaseTestCase
 from causal_testing.testing.causal_test_case import CausalTestCase
-from causal_testing.testing.causal_test_outcome import ExactValue, Positive
+from causal_testing.testing.causal_test_outcome import ExactValue
 from causal_testing.estimation.genetic_programming_regression_fitter import GP
 from causal_testing.estimation.abstract_estimator import Estimator
-from causal_testing.estimation.linear_regression_estimator import LinearRegressionEstimator
 
 from expression_generator import root, reciprocal
 from learn_equations import calculate_nrmse
@@ -134,6 +134,9 @@ def gp_fit(df, features, outcome, seed, original_ols_formula, run_ctf):
     gp_seed_result, gp_seed_time = time_execution(lambda: gp.run_gp(ngen=100, seeds=[lr_formula], repair=False))
 
     original_test_outcomes = run_ctf(df=df, formula=original_model, pset=gp.pset)
+    original_effect_estimates = pd.Series([test["effect_estimate"] for test in original_test_outcomes])
+    original_test_results = pd.Series([test["passed"] for test in original_test_outcomes])
+
     lr_test_outcomes = run_ctf(df=df, formula=model, pset=gp.pset)
     gp_lr_test_outcomes = run_ctf(df=df, formula=gp_lr_result, pset=gp.pset)
     gp_seed_test_outcomes = run_ctf(df=df, formula=gp_seed_result, pset=gp.pset)
@@ -147,18 +150,36 @@ def gp_fit(df, features, outcome, seed, original_ols_formula, run_ctf):
         "lr_simplified_formula": str(gp.simplify(lr_formula)),
         "lr_nrmse": gp.fitness(lr_formula)[0],
         "lr_test_outcomes": lr_test_outcomes,
+        "lr_test_nrmse": calculate_nrmse(
+            pd.Series([test["effect_estimate"] for test in lr_test_outcomes]), original_effect_estimates
+        ),
+        "lr_test_bcr": balanced_accuracy_score(
+            pd.Series([test["passed"] for test in lr_test_outcomes]), original_test_results
+        ),
         "lr_time": lr_time,
         # Our GP results
         "gp_lr_raw_formula": str(gp_lr_result),
         "gp_lr_simplified_formula": str(gp.simplify(gp_lr_result)),
         "gp_lr_nrmse": gp.fitness(gp_lr_result)[0],
         "gp_lr_test_outcomes": gp_lr_test_outcomes,
+        "gp_lr_test_nrmse": calculate_nrmse(
+            pd.Series([test["effect_estimate"] for test in gp_lr_test_outcomes]), original_effect_estimates
+        ),
+        "gp_lr_test_bcr": balanced_accuracy_score(
+            pd.Series([test["passed"] for test in gp_lr_test_outcomes]), original_test_results
+        ),
         "gp_lr_time": gp_lr_time,
         # Baseline GP (with seed) results
         "gp_seed_raw_formula": str(gp_seed_result),
         "gp_seed_simplified_formula": str(gp.simplify(gp_seed_result)),
         "gp_seed_nrmse": gp.fitness(gp_seed_result)[0],
         "gp_seed_test_outcomes": gp_seed_test_outcomes,
+        "gp_seed_test_nrmse": calculate_nrmse(
+            pd.Series([test["effect_estimate"] for test in gp_seed_test_outcomes]), original_effect_estimates
+        ),
+        "gp_seed_test_bcr": balanced_accuracy_score(
+            pd.Series([test["passed"] for test in gp_seed_test_outcomes]), original_test_results
+        ),
         "gp_seed_time": gp_seed_time,
         # NRMSE of original model
         "original_model_formula": pretty_print_ols(original_model),
@@ -208,6 +229,8 @@ def run_causal_test(
         "passed": bool(expected_causal_effect.apply(causal_test_result)),
         "formula": pretty_print_ols(formula) if hasattr(formula, "params") else str(formula),
         "adjustment_set": adjustment_set_config,
+        "effect_estimate": causal_test_result.test_value.value[0],
+        "expected_causal_effect": str(expected_causal_effect),
     }
 
 
@@ -223,13 +246,15 @@ def run_ctf_poisson(df, formula, pset):
             outcome_variable="num_shapes_unit",
             estimate_type="risk_ratio",
             expected_causal_effect=ExactValue(4, 0.5),
-            adjustment_set_config={"width": 1, "height": 1},
+            adjustment_set_config={"width": size, "height": size},
         )
         for i in [1, 2, 4, 8]
+        for size in range(1, 11)
     ]
 
 
 def run_ctf_covasim(df, formula, pset):
+    oracle = pd.read_csv("ctf_example_data/covasim_oracle.csv", index_col=0)
     return [
         run_causal_test(
             df=df,
@@ -240,7 +265,10 @@ def run_ctf_covasim(df, formula, pset):
             treatment_value=0.02672,
             outcome_variable="cum_infections",
             estimate_type="ate",
-            expected_causal_effect=Positive(),
+            expected_causal_effect=ExactValue(
+                oracle["change_in_infections"][location],
+                0.055 * oracle["change_in_infections"][location],
+            ),
             adjustment_set_config=df.loc[
                 df["location"] == location,
                 ["avg_rel_sus", "total_contacts_h", "total_contacts_s", "total_contacts_w"],
