@@ -70,14 +70,8 @@ plot_grouped_boxplot(
 compute_stats(df, "system", P_ALPHA, "figures/ctf_runtime.csv", outcome="time")
 
 # Causal test outcomes
-# No result for "original" since this is the gold standard comparison
+# No result plotted for "original" since this is the gold standard comparison for the other three
 print("\nCausal Effect Estimates")
-for ls in [list(df.groupby("system")[f"{techique}_test_nrmse"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]]:
-    print()
-    for gp in ls:
-        print(gp)
-print()
-
 plot_grouped_boxplot(
     [list(df.groupby("system")[f"{techique}_test_nrmse"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]],
     savepath="figures/ctf_test_nrmse.png",
