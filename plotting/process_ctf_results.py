@@ -39,7 +39,7 @@ plot_grouped_boxplot(
         list(df.groupby("system")[f"{techique}_nrmse"].apply(list))
         for techique in ["lr", "gp_seed", "gp_lr", "original_model"]
     ],
-    savepath="figures/ctf_nrmse..pgf",
+    savepath="figures/ctf_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR, ORIGINAL],
     colours=[RED, BLUE, GREEN, MAGENTA],
@@ -59,7 +59,7 @@ plot_grouped_boxplot(
         list(df.groupby("system")[f"{techique}_time"].apply(list))
         for techique in ["lr", "gp_seed", "gp_lr", "original_model"]
     ],
-    savepath="figures/ctf_runtime..pgf",
+    savepath="figures/ctf_runtime.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR, ORIGINAL],
     colours=[RED, BLUE, GREEN, MAGENTA],
@@ -95,13 +95,13 @@ axs[0].set_yticklabels(["-1", "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.
 axs[0].set_ylim([x / 100 for x in axs[1].get_ylim()])
 axs[0].set_xlabel("System")
 axs[0].xaxis.set_label_coords(1.05, -0.1)
-plt.savefig("figures/ctf_test_nrmse..pgf", bbox_inches="tight", pad_inches=0)
+plt.savefig("figures/ctf_test_nrmse.pgf", bbox_inches="tight", pad_inches=0)
 compute_stats(df, "system", P_ALPHA, "figures/ctf_test_nrmse.csv", outcome="test_nrmse")
 
 print("\nCausal Test Outcomes")
 plot_grouped_boxplot(
     [list(df.groupby("system")[f"{techique}_test_bcr"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]],
-    savepath="figures/ctf_test_bcr..pgf",
+    savepath="figures/ctf_test_bcr.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
