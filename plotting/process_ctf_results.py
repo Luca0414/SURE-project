@@ -39,7 +39,7 @@ plot_grouped_boxplot(
         list(df.groupby("system")[f"{techique}_nrmse"].apply(list))
         for techique in ["lr", "gp_seed", "gp_lr", "original_model"]
     ],
-    savepath="figures/ctf_nrmse.png",
+    savepath="figures/ctf_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR, ORIGINAL],
     colours=[RED, BLUE, GREEN, MAGENTA],
@@ -58,7 +58,7 @@ plot_grouped_boxplot(
         list(df.groupby("system")[f"{techique}_time"].apply(list))
         for techique in ["lr", "gp_seed", "gp_lr", "original_model"]
     ],
-    savepath="figures/ctf_runtime.png",
+    savepath="figures/ctf_runtime.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR, ORIGINAL],
     colours=[RED, BLUE, GREEN, MAGENTA],
@@ -74,7 +74,7 @@ compute_stats(df, "system", P_ALPHA, "figures/ctf_runtime.csv", outcome="time")
 print("\nCausal Effect Estimates")
 plot_grouped_boxplot(
     [list(df.groupby("system")[f"{techique}_test_nrmse"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]],
-    savepath="figures/ctf_test_nrmse.png",
+    savepath="figures/ctf_test_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -89,7 +89,7 @@ compute_stats(df, "system", P_ALPHA, "figures/ctf_test_nrmse.csv", outcome="test
 print("\nCausal Test Outcomes")
 plot_grouped_boxplot(
     [list(df.groupby("system")[f"{techique}_test_bcr"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]],
-    savepath="figures/ctf_test_bcr.png",
+    savepath="figures/ctf_test_bcr.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],

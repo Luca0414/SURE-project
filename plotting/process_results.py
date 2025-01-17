@@ -47,7 +47,7 @@ gp_lr_nrmse = list(df.groupby("num_vars")["gp_lr_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/rq1_num_vars_nrmse.png",
+    savepath="figures/rq1_num_vars_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -69,7 +69,7 @@ gp_lr_nrmse = list(df.groupby("data_size")["gp_lr_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/rq2_data_nrmse.png",
+    savepath="figures/rq2_data_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -90,7 +90,7 @@ gp_lr_nrmse = list(df.groupby("epsilon")["gp_lr_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/rq3_epsilon_nrmse.png",
+    savepath="figures/rq3_epsilon_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -111,7 +111,7 @@ gp_lr_time = list(df.groupby("num_vars")["gp_lr_time"].apply(list))
 
 plot_grouped_boxplot(
     [lr_time, gp_time, gp_lr_time],
-    savepath="figures/runtime.png",
+    savepath="figures/runtime.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
