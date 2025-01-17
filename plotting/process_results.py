@@ -47,7 +47,7 @@ gp_lr_nrmse = list(df.groupby("num_vars")["gp_lr_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/rq1_num_vars_nrmse.pgf",
+    savepath="figures/random_num_vars_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -58,7 +58,7 @@ plot_grouped_boxplot(
     # Need to hide fliers because LR errors are stupidly large
     showfliers=[False, True, True],
 )
-compute_stats(df, "num_vars", P_ALPHA, "figures/rq1_num_vars_nrmse.csv")
+compute_stats(df, "num_vars", P_ALPHA, "figures/random_num_vars_nrmse.csv")
 
 
 # RQ2: Amount of data
@@ -69,7 +69,7 @@ gp_lr_nrmse = list(df.groupby("data_size")["gp_lr_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/rq2_data_nrmse.pgf",
+    savepath="figures/random_data_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -80,7 +80,7 @@ plot_grouped_boxplot(
     # Need to hide fliers because LR errors are stupidly large
     showfliers=[False, True, True],
 )
-compute_stats(df, "data_size", P_ALPHA, "figures/rq2_data_nrmse.csv")
+compute_stats(df, "data_size", P_ALPHA, "figures/random_data_nrmse.csv")
 
 # RQ3: Amount of noise
 print("\nRQ3: Amount of noise")
@@ -90,7 +90,7 @@ gp_lr_nrmse = list(df.groupby("epsilon")["gp_lr_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/rq3_epsilon_nrmse.pgf",
+    savepath="figures/random_epsilon_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -101,7 +101,7 @@ plot_grouped_boxplot(
     # Need to hide fliers because a couple of LR errors are stupidly large
     showfliers=[False, True, True],
 )
-compute_stats(df, "epsilon", P_ALPHA, "figures/rq3_epsilon_nrmse.csv")
+compute_stats(df, "epsilon", P_ALPHA, "figures/random_epsilon_nrmse.csv")
 
 # Runtime
 print("\nRuntime")
