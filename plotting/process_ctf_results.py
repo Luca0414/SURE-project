@@ -13,6 +13,7 @@ from grouped_boxplot import plot_grouped_boxplot, compute_stats
 from constants import RED, BLUE, GREEN, MAGENTA, BASELINE_LR, BASELINE_GP, GP_LR, ORIGINAL
 
 plt.style.use("ggplot")
+plt.rcParams.update({"font.size": 22})
 
 if not os.path.exists("figures"):
     os.mkdir("figures")
@@ -73,7 +74,7 @@ compute_stats(df, "system", P_ALPHA, "figures/ctf_runtime.csv", outcome="time")
 # Causal test outcomes
 # No result plotted for "original" since this is the gold standard comparison for the other three
 print("\nCausal Effect Estimates")
-fig, axs = plt.subplots(1, 2, figsize=(8, 4))
+fig, axs = plt.subplots(1, 2, figsize=(8, 6))
 axs = axs.reshape(-1)
 label = True
 for system, ax in zip(df.groupby("system").groups, axs):
@@ -88,13 +89,15 @@ for system, ax in zip(df.groupby("system").groups, axs):
         ylabel="Causal Effect Estimate NRSME" if label else None,
         showfliers=False,
         offset=0.05,
+        legend=False,
     )
     label = False
 axs[0].set_yticks(axs[1].get_yticks() / 100)
-axs[0].set_yticklabels(["-1", "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"])
+# axs[0].set_yticklabels(["-1", "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"])
 axs[0].set_ylim([x / 100 for x in axs[1].get_ylim()])
 axs[0].set_xlabel("System")
 axs[0].xaxis.set_label_coords(1.05, -0.1)
+axs[0].legend(loc="upper center")
 plt.savefig("figures/ctf_test_nrmse.pgf", bbox_inches="tight", pad_inches=0)
 compute_stats(df, "system", P_ALPHA, "figures/ctf_test_nrmse.csv", outcome="test_nrmse")
 

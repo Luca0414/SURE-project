@@ -37,9 +37,11 @@ def plot_grouped_boxplot(
     showfliers=True,
     yticks=None,
     offset=0,
+    figsize=(8, 6),
+    legend=True,
 ):
     if ax is None:
-        _, ax = plt.subplots(figsize=(8, 4))
+        _, ax = plt.subplots(figsize=figsize)
     positions = max(len(x) for x in groups)
     plots = len(groups)
     if isinstance(labels, list) and len(labels) != plots:
@@ -70,7 +72,7 @@ def plot_grouped_boxplot(
             np.array(range(len(xticklabels))) * (plots + 1) + (((plots + (plots / 2) - 1) * width) / 2),
             xticklabels,
         )
-    if labels is not None:
+    if labels is not None and legend:
         ax.legend()
     if title is not None:
         ax.set_title(title)
