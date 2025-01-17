@@ -35,9 +35,11 @@ def plot_grouped_boxplot(
     ylabel=None,
     ax=None,
     showfliers=True,
+    yticks=None,
+    offset=0,
 ):
     if ax is None:
-        _, ax = plt.subplots()
+        _, ax = plt.subplots(figsize=(8, 4))
     positions = max(len(x) for x in groups)
     plots = len(groups)
     if isinstance(labels, list) and len(labels) != plots:
@@ -53,7 +55,7 @@ def plot_grouped_boxplot(
 
         ax.boxplot(
             boxes,
-            positions=np.array(range(positions)) * (plots + 1) + i,
+            positions=np.array(range(positions)) * (plots + 1) + i + offset,
             widths=width,
             showfliers=showfliers[i],
             label=labels[i] if labels is not None else None,
@@ -76,8 +78,10 @@ def plot_grouped_boxplot(
         ax.set_xlabel(xlabel)
     if ylabel is not None:
         ax.set_ylabel(ylabel)
+    if yticks is not None:
+        ax.set_yticks(yticks)
     if savepath is not None:
-        plt.savefig(savepath)
+        plt.savefig(savepath, bbox_inches="tight", pad_inches=0)
         plt.clf()
 
 
