@@ -179,13 +179,17 @@ gp_time = list(df.groupby("num_vars")["gp_seed_time"].apply(list))
 gp_lr_time = list(df.groupby("num_vars")["gp_lr_time"].apply(list))
 
 plot_grouped_boxplot(
-    [lr_time, gp_time, gp_lr_time],
-    savepath="figures/runtime.pgf",
+    [
+        [lr_time[0], lr_time[4], lr_time[9]],
+        [gp_time[0], gp_time[4], gp_time[9]],
+        [gp_lr_time[0], gp_lr_time[4], gp_lr_time[9]],
+    ],
+    savepath="figures/random_runtime.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
     markers=["x", "o", "+"],
-    xticklabels=range(1, 11),
+    xticklabels=[1, 5, 10],
     xlabel="Number of variables",
     ylabel="Runtime (seconds)",
 )
