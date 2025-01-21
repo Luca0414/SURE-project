@@ -177,14 +177,13 @@ print("\nRuntime")
 lr_time = list(df.groupby("num_vars")["lr_time"].apply(list))
 gp_time = list(df.groupby("num_vars")["gp_seed_time"].apply(list))
 gp_lr_time = list(df.groupby("num_vars")["gp_lr_time"].apply(list))
-
 plot_grouped_boxplot(
     [
         [lr_time[0], lr_time[4], lr_time[9]],
         [gp_time[0], gp_time[4], gp_time[9]],
         [gp_lr_time[0], gp_lr_time[4], gp_lr_time[9]],
     ],
-    savepath="figures/random_runtime.pgf",
+    savepath="figures/random_vars_runtime.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -193,4 +192,36 @@ plot_grouped_boxplot(
     xlabel="Number of variables",
     ylabel="Runtime (seconds)",
 )
-compute_stats(df, "num_vars", P_ALPHA, "figures/random_runtime.csv", outcome="time")
+compute_stats(df, "num_vars", P_ALPHA, "figures/random_vars_runtime.csv", outcome="time")
+
+lr_time = list(df.groupby("data_size")["lr_time"].apply(list))
+gp_time = list(df.groupby("data_size")["gp_seed_time"].apply(list))
+gp_lr_time = list(df.groupby("data_size")["gp_lr_time"].apply(list))
+plot_grouped_boxplot(
+    [lr_time, gp_time, gp_lr_time],
+    savepath="figures/random_data_runtime.pgf",
+    width=0.6,
+    labels=[BASELINE_LR, BASELINE_GP, GP_LR],
+    colours=[RED, BLUE, GREEN],
+    markers=["x", "o", "+"],
+    xticklabels=[10, 50, 100, 500, 1000],
+    xlabel="Number of data points",
+    ylabel="Runtime (seconds)",
+)
+compute_stats(df, "data_size", P_ALPHA, "figures/random_data_runtime.csv", outcome="time")
+
+lr_time = list(df.groupby("epsilon")["lr_time"].apply(list))
+gp_time = list(df.groupby("epsilon")["gp_seed_time"].apply(list))
+gp_lr_time = list(df.groupby("epsilon")["gp_lr_time"].apply(list))
+plot_grouped_boxplot(
+    [lr_time, gp_time, gp_lr_time],
+    savepath="figures/random_epsilon_runtime.pgf",
+    width=0.6,
+    labels=[BASELINE_LR, BASELINE_GP, GP_LR],
+    colours=[RED, BLUE, GREEN],
+    markers=["x", "o", "+"],
+    xticklabels=[10, 50, 100, 500, 1000],
+    xlabel="Epsilon",
+    ylabel="Runtime (seconds)",
+)
+compute_stats(df, "epsilon", P_ALPHA, "figures/random_epsilon_runtime.csv", outcome="time")
