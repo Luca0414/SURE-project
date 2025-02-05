@@ -7,7 +7,7 @@ BLUE = "#0072B2"
 GREEN = "#009E73"
 MAGENTA = "#CC79A7"
 
-ORIGINAL = "Original regression equation"
+ORIGINAL = "Original equation"
 BASELINE_LR = "Linear regression"
 BASELINE_GP = "Genetic programming"
 GP_LR = "Hybrid approach"

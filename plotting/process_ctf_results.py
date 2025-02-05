@@ -35,12 +35,13 @@ df = pd.DataFrame(df)
 
 # RQ1: Number of variables
 print("NRMSE")
+fig, ax = plt.subplots(figsize=(10, 6))
 plot_grouped_boxplot(
     [
         list(df.groupby("system")[f"{techique}_nrmse"].apply(list))
         for techique in ["lr", "gp_seed", "gp_lr", "original_model"]
     ],
-    savepath="figures/ctf_nrmse.pgf",
+    ax=ax,
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR, ORIGINAL],
     colours=[RED, BLUE, GREEN, MAGENTA],
@@ -49,7 +50,10 @@ plot_grouped_boxplot(
     xlabel="System",
     ylabel="NRMSE",
     yticks=[x / 100 for x in range(0, 7)],
+    legend=False,
 )
+ax.legend(loc="lower right", bbox_to_anchor=(1, 0.14))
+plt.savefig("figures/ctf_nrmse.pgf", bbox_inches="tight", pad_inches=0)
 compute_stats(df, "system", P_ALPHA, "figures/ctf_nrmse.csv")
 
 
@@ -74,30 +78,35 @@ compute_stats(df, "system", P_ALPHA, "figures/ctf_runtime.csv", outcome="time")
 # Causal test outcomes
 # No result plotted for "original" since this is the gold standard comparison for the other three
 print("\nCausal Effect Estimates")
-fig, axs = plt.subplots(1, 2, figsize=(8, 6))
-axs = axs.reshape(-1)
-label = True
-for system, ax in zip(df.groupby("system").groups, axs):
+fig, ax1 = plt.subplots(figsize=(10, 6))
+ax2 = ax1.twinx()
+ax2.grid(False)
+systems = sorted(list(df.groupby("system").groups))
+for system, ax in zip(systems, [ax1, ax2]):
+    boxes = [[df.loc[df["system"] == system, f"{techique}_test_nrmse"]] for techique in ["lr", "gp_seed", "gp_lr"]]
+    if ax == ax1:
+        boxes = [x + [[]] for x in boxes]
+    if ax == ax2:
+        boxes = [[[]] + x for x in boxes]
     plot_grouped_boxplot(
-        [[df.loc[df["system"] == system, f"{techique}_test_nrmse"]] for techique in ["lr", "gp_seed", "gp_lr"]],
+        boxes,
         ax=ax,
         width=0.6,
-        labels=[BASELINE_LR, BASELINE_GP, GP_LR] if label else None,
+        labels=[BASELINE_LR, BASELINE_GP, GP_LR] if ax == ax1 else None,
         colours=[RED, BLUE, GREEN],
         markers=["x", "o", "+"],
-        xticklabels=[system],
-        ylabel="Causal Effect Estimate NRSME" if label else None,
+        xticklabels=systems,
         showfliers=False,
         offset=0.05,
         legend=False,
     )
-    label = False
-axs[0].set_yticks(axs[1].get_yticks() / 100)
-# axs[0].set_yticklabels(["-1", "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"])
-axs[0].set_ylim([x / 100 for x in axs[1].get_ylim()])
-axs[0].set_xlabel("System")
-axs[0].xaxis.set_label_coords(1.05, -0.1)
-axs[0].legend(loc="upper center")
+ax1.set_ylabel("Causal Effect Estimate NRSME")
+ax1.set_yticks(ax2.get_yticks() / 100)
+ax1.set_yticklabels(["-1", "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"])
+ax1.set_ylim([x / 100 for x in ax2.get_ylim()])
+ax1.set_xlabel("System")
+ax1.legend(loc="upper left")
+plt.tight_layout()
 plt.savefig("figures/ctf_test_nrmse.pgf", bbox_inches="tight", pad_inches=0)
 compute_stats(df, "system", P_ALPHA, "figures/ctf_test_nrmse.csv", outcome="test_nrmse")
 

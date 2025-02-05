@@ -37,7 +37,7 @@ def plot_grouped_boxplot(
     showfliers=True,
     yticks=None,
     offset=0,
-    figsize=(8, 6),
+    figsize=(10, 6),
     legend=True,
 ):
     if ax is None:
@@ -45,7 +45,9 @@ def plot_grouped_boxplot(
     positions = max(len(x) for x in groups)
     plots = len(groups)
     if isinstance(labels, list) and len(labels) != plots:
-        raise ValueError("If providing labels, please ensure that you provide as many as you have plots")
+        raise ValueError(
+            f"If providing labels, please ensure that you provide as many as you have plots ({len(labels)})"
+        )
     if isinstance(colours, list) and len(colours) != plots:
         raise ValueError("If providing colours, please ensure that you provide as many as you have plots")
     if isinstance(showfliers, bool):
