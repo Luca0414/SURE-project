@@ -12,6 +12,10 @@ Our Python version and dependencies can be found in `environment.yaml`.
 2. Create a conda environment: `conda env create -f environment.yaml`. This will create a conda environment called `gplr` (Genetic Programming Linear Regression), although you can name the environment differently if you wish.
 3. Activate the conda environment: `conda activate gplr`.
 
+## Results Data
+We distribute our results data as zip files attached to the (CauSE release v1.0.0)[https://github.com/Luca0414/SURE-project/releases/tag/v1.0.0].
+To use this data, simply extract the two results zip files in the main repo directory and skip straight to the (plotting)[#plotting] section to plot the results.
+
 ## Running controlled experiments for random expressions
 1. Generate the configurations: `python generate_configurations.py`. This will create a file called `configurations.txt` which contains the 300 configurations we used for our paper.
 2. Run `learn_equations.py` with each of the configurations in `configurations.txt`. This will create a directory called `results` containing JSON that record the output of each run.
@@ -29,3 +33,11 @@ This will submit 300 separate jobs, one for each configuration.
 For our paper, we used seeds 1-30. The easiest way to recreate this is by doing `seq 1 300 | xargs -n 1 python learn_ctf_examples.py -o ctf_example_results -s`.
 This can also be run on HPC by modifying `learn_equations.bash` to call `learn_ctf_examples.py`.
 3. Generate the figures in the paper by running `python plotting/process_ctf_results.py`. This will place the figures and statistical analyses within the `figures` directory (first creating the directory if it does not already exist).
+
+## Plotting
+To generate the figures in the paper, simply run the following commands from the main repo directory after having first extracted or re-collected the experimental results data.
+```
+python plotting/process_results.py
+python plotting/process_ctf_results.py
+```
+This will generate all of the figures in the paper and more, which should be self explanatory.
