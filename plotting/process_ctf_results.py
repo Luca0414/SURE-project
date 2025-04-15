@@ -96,13 +96,13 @@ for system, ax in zip(systems, [ax1, ax2]):
         colours=[RED, BLUE, GREEN],
         markers=["x", "o", "+"],
         xticklabels=systems,
-        showfliers=False,
+        # showfliers=False,
         offset=0.05,
         legend=False,
     )
 ax1.set_ylabel("Causal Effect Estimate NRSME")
 ax1.set_yticks(ax2.get_yticks() / 100)
-ax1.set_yticklabels(["-1", "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"])
+# ax1.set_yticklabels(["-1", "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"])
 ax1.set_ylim([x / 100 for x in ax2.get_ylim()])
 ax1.set_xlabel("System")
 ax1.legend(loc="upper left")

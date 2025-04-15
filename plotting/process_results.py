@@ -35,12 +35,17 @@ for file in glob("results/*.json"):
 df = pd.DataFrame(df)
 data_points_worse = df.loc[df["gp_seed_predictive_nrmse"] < df["gp_lr_predictive_nrmse"]]
 print("gp_lr_predictive_nrmse was worse in", len(data_points_worse), "cases out of", len(df))
-print(data_points_worse[["num_vars", "epsilon"]].value_counts().sort_index())
+# print(data_points_worse[["num_vars", "epsilon"]].value_counts().sort_index())
+print(len(df), "data points")
+print(len(df.query("lr_nrmse > 1")), "points with lr_nrmse > 1")
+print(len(df.query("lr_predictive_nrmse > 1")), "points with lr_predictive_nrmse > 1")
+print(len(df.query("gp_seed_predictive_nrmse > 1")), "points with gp_seed_predictive_nrmse > 1")
+print(len(df.query("gp_lr_predictive_nrmse > 1")), "points with gp_lr_predictive_nrmse > 1")
 
 
 # RQ1: Number of variables
 print("RQ1: Number of variables")
-lr_nrmse = list(df.groupby("num_vars")["lr_nrmse"].apply(list))
+lr_nrmse = list(df.query("lr_nrmse <= 1").groupby("num_vars")["lr_nrmse"].apply(list))
 gp_nrmse = list(df.groupby("num_vars")["gp_seed_nrmse"].apply(list))
 gp_lr_nrmse = list(df.groupby("num_vars")["gp_lr_nrmse"].apply(list))
 
@@ -60,13 +65,13 @@ plot_grouped_boxplot(
     ylabel="NRMSE",
     yticks=[x / 10 for x in range(0, 11, 2)],
     # Need to hide fliers because LR errors are stupidly large
-    showfliers=False,
+    # showfliers=False,
 )
 compute_stats(df, "num_vars", P_ALPHA, "figures/random_num_vars_nrmse.csv", outcome="nrmse")
 
-lr_nrmse = list(df.groupby("num_vars")["lr_predictive_nrmse"].apply(list))
-gp_nrmse = list(df.groupby("num_vars")["gp_seed_predictive_nrmse"].apply(list))
-gp_lr_nrmse = list(df.groupby("num_vars")["gp_lr_predictive_nrmse"].apply(list))
+lr_nrmse = list(df.query("lr_predictive_nrmse <= 1").groupby("num_vars")["lr_predictive_nrmse"].apply(list))
+gp_nrmse = list(df.query("gp_seed_predictive_nrmse <= 1").groupby("num_vars")["gp_seed_predictive_nrmse"].apply(list))
+gp_lr_nrmse = list(df.query("gp_lr_predictive_nrmse <= 1").groupby("num_vars")["gp_lr_predictive_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [
@@ -84,14 +89,14 @@ plot_grouped_boxplot(
     ylabel="NRMSE",
     yticks=[x / 10 for x in range(0, 11, 2)],
     # Need to hide fliers because LR errors are stupidly large
-    showfliers=False,
+    # showfliers=False,
 )
 compute_stats(df, "num_vars", P_ALPHA, "figures/random_num_vars_predictive_nrmse.csv", outcome="predictive_nrmse")
 
 
 # RQ2: Amount of data
 print("\nRQ2: Amount of data")
-lr_nrmse = list(df.groupby("data_size")["lr_nrmse"].apply(list))
+lr_nrmse = list(df.query("lr_nrmse <= 1").groupby("data_size")["lr_nrmse"].apply(list))
 gp_nrmse = list(df.groupby("data_size")["gp_seed_nrmse"].apply(list))
 gp_lr_nrmse = list(df.groupby("data_size")["gp_lr_nrmse"].apply(list))
 
@@ -107,12 +112,12 @@ plot_grouped_boxplot(
     ylabel="NRMSE",
     yticks=[x / 10 for x in range(0, 11, 2)],
     # Need to hide fliers because LR errors are stupidly large
-    showfliers=False,
+    # showfliers=False,
 )
 compute_stats(df, "data_size", P_ALPHA, "figures/random_data_nrmse.csv")
-lr_nrmse = list(df.groupby("data_size")["lr_predictive_nrmse"].apply(list))
-gp_nrmse = list(df.groupby("data_size")["gp_seed_predictive_nrmse"].apply(list))
-gp_lr_nrmse = list(df.groupby("data_size")["gp_lr_predictive_nrmse"].apply(list))
+lr_nrmse = list(df.query("lr_predictive_nrmse <= 1").groupby("data_size")["lr_predictive_nrmse"].apply(list))
+gp_nrmse = list(df.query("gp_seed_predictive_nrmse <= 1").groupby("data_size")["gp_seed_predictive_nrmse"].apply(list))
+gp_lr_nrmse = list(df.query("gp_lr_predictive_nrmse <= 1").groupby("data_size")["gp_lr_predictive_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
@@ -126,13 +131,13 @@ plot_grouped_boxplot(
     ylabel="NRMSE",
     yticks=[x / 10 for x in range(0, 11, 2)],
     # Need to hide fliers because LR errors are stupidly large
-    showfliers=False,
+    # showfliers=False,
 )
 compute_stats(df, "data_size", P_ALPHA, "figures/random_data_predictive_nrmse.csv")
 
 # RQ3: Amount of noise
 print("\nRQ3: Amount of noise")
-lr_nrmse = list(df.groupby("epsilon")["lr_nrmse"].apply(list))
+lr_nrmse = list(df.query("lr_nrmse <= 1").groupby("epsilon")["lr_nrmse"].apply(list))
 gp_nrmse = list(df.groupby("epsilon")["gp_seed_nrmse"].apply(list))
 gp_lr_nrmse = list(df.groupby("epsilon")["gp_lr_nrmse"].apply(list))
 
@@ -148,13 +153,13 @@ plot_grouped_boxplot(
     ylabel="NRMSE",
     yticks=[x / 10 for x in range(0, 11, 2)],
     # Need to hide fliers because a couple of LR errors are stupidly large
-    showfliers=False,
+    # showfliers=False,
 )
 compute_stats(df, "epsilon", P_ALPHA, "figures/random_epsilon_nrmse.csv")
 
-lr_nrmse = list(df.groupby("epsilon")["lr_predictive_nrmse"].apply(list))
-gp_nrmse = list(df.groupby("epsilon")["gp_seed_predictive_nrmse"].apply(list))
-gp_lr_nrmse = list(df.groupby("epsilon")["gp_lr_predictive_nrmse"].apply(list))
+lr_nrmse = list(df.query("lr_predictive_nrmse <= 1").groupby("epsilon")["lr_predictive_nrmse"].apply(list))
+gp_nrmse = list(df.query("gp_seed_predictive_nrmse <= 1").groupby("epsilon")["gp_seed_predictive_nrmse"].apply(list))
+gp_lr_nrmse = list(df.query("gp_lr_predictive_nrmse <= 1").groupby("epsilon")["gp_lr_predictive_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
@@ -168,7 +173,7 @@ plot_grouped_boxplot(
     ylabel="NRMSE",
     yticks=[x / 10 for x in range(0, 11, 2)],
     # Need to hide fliers because a couple of LR errors are stupidly large
-    showfliers=False,
+    # showfliers=False,
 )
 compute_stats(df, "epsilon", P_ALPHA, "figures/random_epsilon_predictive_nrmse.csv")
 
