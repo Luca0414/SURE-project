@@ -42,6 +42,9 @@ print(len(df.query("lr_predictive_nrmse > 1")), "points with lr_predictive_nrmse
 print(len(df.query("gp_seed_predictive_nrmse > 1")), "points with gp_seed_predictive_nrmse > 1")
 print(len(df.query("gp_lr_predictive_nrmse > 1")), "points with gp_lr_predictive_nrmse > 1")
 
+fig_t, [t1, t2, t3] = plt.subplots(1, 3, figsize=(24, 4))
+fig_p, [p1, p2, p3] = plt.subplots(1, 3, figsize=(24, 4))
+
 
 # RQ1: Number of variables
 print("RQ1: Number of variables")
@@ -55,7 +58,9 @@ plot_grouped_boxplot(
         [gp_nrmse[0], gp_nrmse[4], gp_nrmse[9]],
         [gp_lr_nrmse[0], gp_lr_nrmse[4], gp_lr_nrmse[9]],
     ],
-    savepath="figures/random_num_vars_nrmse.pgf",
+    ax=t1,
+    legend=False,
+    # savepath="figures/random_num_vars_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -79,7 +84,9 @@ plot_grouped_boxplot(
         [gp_nrmse[0], gp_nrmse[4], gp_nrmse[9]],
         [gp_lr_nrmse[0], gp_lr_nrmse[4], gp_lr_nrmse[9]],
     ],
-    savepath="figures/random_num_vars_predictive_nrmse.pgf",
+    # savepath="figures/random_num_vars_predictive_nrmse.pgf",
+    ax=p1,
+    legend=False,
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -102,7 +109,9 @@ gp_lr_nrmse = list(df.groupby("data_size")["gp_lr_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/random_data_nrmse.pgf",
+    ax=t2,
+    legend=False,
+    # savepath="figures/random_data_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -121,7 +130,9 @@ gp_lr_nrmse = list(df.query("gp_lr_predictive_nrmse <= 1").groupby("data_size")[
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/random_data_predictive_nrmse.pgf",
+    # savepath="figures/random_data_predictive_nrmse.pgf",
+    ax=p2,
+    legend=False,
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -143,7 +154,9 @@ gp_lr_nrmse = list(df.groupby("epsilon")["gp_lr_nrmse"].apply(list))
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/random_epsilon_nrmse.pgf",
+    # savepath="figures/random_epsilon_nrmse.pgf",
+    ax=t3,
+    legend=False,
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -163,7 +176,9 @@ gp_lr_nrmse = list(df.query("gp_lr_predictive_nrmse <= 1").groupby("epsilon")["g
 
 plot_grouped_boxplot(
     [lr_nrmse, gp_nrmse, gp_lr_nrmse],
-    savepath="figures/random_epsilon_predictive_nrmse.pgf",
+    ax=p3,
+    legend=False,
+    # savepath="figures/random_epsilon_predictive_nrmse.pgf",
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -176,6 +191,12 @@ plot_grouped_boxplot(
     # showfliers=False,
 )
 compute_stats(df, "epsilon", P_ALPHA, "figures/random_epsilon_predictive_nrmse.csv")
+
+handles, labels = t1.get_legend_handles_labels()
+# fig_p.legend(handles, labels, loc='upper center', ncols=len(handles), bbox_to_anchor=(0.5, 1.1))
+fig_t.legend(handles, labels, loc='upper center', ncols=len(handles), bbox_to_anchor=(0.5, 1.1))
+fig_p.savefig("figures/random_predictive.pgf", bbox_inches="tight", pad_inches=0)
+fig_t.savefig("figures/random_training.pgf", bbox_inches="tight", pad_inches=0)
 
 # Runtime
 print("\nRuntime")

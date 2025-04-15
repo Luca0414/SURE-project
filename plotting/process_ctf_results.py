@@ -59,6 +59,7 @@ compute_stats(df, "system", P_ALPHA, "figures/ctf_nrmse.csv")
 
 # Runtime
 print("\nRuntime")
+SCALE_FACTOR = 250
 plot_grouped_boxplot(
     [
         list(df.groupby("system")[f"{techique}_time"].apply(list))
@@ -101,9 +102,9 @@ for system, ax in zip(systems, [ax1, ax2]):
         legend=False,
     )
 ax1.set_ylabel("Causal Effect Estimate NRSME")
-ax1.set_yticks(ax2.get_yticks() / 100)
+ax1.set_yticks(ax2.get_yticks() / SCALE_FACTOR)
 # ax1.set_yticklabels(["-1", "0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7"])
-ax1.set_ylim([x / 100 for x in ax2.get_ylim()])
+ax1.set_ylim([x / SCALE_FACTOR for x in ax2.get_ylim()])
 ax1.set_xlabel("System")
 ax1.legend(loc="upper left")
 plt.tight_layout()
@@ -111,9 +112,10 @@ plt.savefig("figures/ctf_test_nrmse.pgf", bbox_inches="tight", pad_inches=0)
 compute_stats(df, "system", P_ALPHA, "figures/ctf_test_nrmse.csv", outcome="test_nrmse")
 
 print("\nCausal Test Outcomes")
+fig, ax = plt.subplots(figsize=(10, 6))
 plot_grouped_boxplot(
     [list(df.groupby("system")[f"{techique}_test_bcr"].apply(list)) for techique in ["lr", "gp_seed", "gp_lr"]],
-    savepath="figures/ctf_test_bcr.pgf",
+    ax=ax,
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -121,6 +123,10 @@ plot_grouped_boxplot(
     xticklabels=df.groupby("system").groups,
     xlabel="System",
     ylabel="Test Outcome BCR",
-    yticks=[x / 10 for x in range(11)],
+    yticks=[x / 10 for x in range(0, 11, 2)],
 )
+
+low, high = ax2.get_ylim()
+ax.set_ylim((low/SCALE_FACTOR, high/SCALE_FACTOR))
+plt.savefig("figures/ctf_test_bcr.pgf", bbox_inches="tight", pad_inches=0)
 compute_stats(df, "system", P_ALPHA, "figures/ctf_test_bcr.csv", outcome="test_bcr")
