@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from scipy.stats import friedmanchisquare
+from scipy.stats import friedmanchisquare, spearmanr
 from scikit_posthocs import posthoc_nemenyi_friedman
 
 
@@ -115,3 +115,7 @@ def compute_stats(df, groupby, p_alpha, save_path, outcome="nrmse"):
     stats_data = pd.DataFrame(stats_data)
     stats_data.to_csv(save_path)
     print(stats_data)
+
+    for technique in ["lr", "gp_seed", "gp_lr"]:
+        stat, p = spearmanr(df[groupby], df[f"{technique}_{outcome}"])
+        print(technique, stat, p)

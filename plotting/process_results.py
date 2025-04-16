@@ -194,12 +194,14 @@ compute_stats(df, "epsilon", P_ALPHA, "figures/random_epsilon_predictive_nrmse.c
 
 handles, labels = t1.get_legend_handles_labels()
 # fig_p.legend(handles, labels, loc='upper center', ncols=len(handles), bbox_to_anchor=(0.5, 1.1))
-fig_t.legend(handles, labels, loc='upper center', ncols=len(handles), bbox_to_anchor=(0.5, 1.1))
+fig_t.legend(handles, labels, loc="upper center", ncols=len(handles), bbox_to_anchor=(0.5, 1.1))
 fig_p.savefig("figures/random_predictive.pgf", bbox_inches="tight", pad_inches=0)
 fig_t.savefig("figures/random_training.pgf", bbox_inches="tight", pad_inches=0)
 
 # Runtime
 print("\nRuntime")
+fig_r, [r1, r2, r3] = plt.subplots(1, 3, figsize=(24, 4))
+
 lr_time = list(df.groupby("num_vars")["lr_time"].apply(list))
 gp_time = list(df.groupby("num_vars")["gp_seed_time"].apply(list))
 gp_lr_time = list(df.groupby("num_vars")["gp_lr_time"].apply(list))
@@ -209,7 +211,9 @@ plot_grouped_boxplot(
         [gp_time[0], gp_time[4], gp_time[9]],
         [gp_lr_time[0], gp_lr_time[4], gp_lr_time[9]],
     ],
-    savepath="figures/random_vars_runtime.pgf",
+    # savepath="figures/random_vars_runtime.pgf",
+    ax=r1,
+    legend=False,
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -225,7 +229,9 @@ gp_time = list(df.groupby("data_size")["gp_seed_time"].apply(list))
 gp_lr_time = list(df.groupby("data_size")["gp_lr_time"].apply(list))
 plot_grouped_boxplot(
     [lr_time, gp_time, gp_lr_time],
-    savepath="figures/random_data_runtime.pgf",
+    # savepath="figures/random_data_runtime.pgf",
+    ax=r2,
+    legend=False,
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
@@ -241,13 +247,18 @@ gp_time = list(df.groupby("epsilon")["gp_seed_time"].apply(list))
 gp_lr_time = list(df.groupby("epsilon")["gp_lr_time"].apply(list))
 plot_grouped_boxplot(
     [lr_time, gp_time, gp_lr_time],
-    savepath="figures/random_epsilon_runtime.pgf",
+    # savepath="figures/random_epsilon_runtime.pgf",
+    ax=r3,
+    legend=False,
     width=0.6,
     labels=[BASELINE_LR, BASELINE_GP, GP_LR],
     colours=[RED, BLUE, GREEN],
     markers=["x", "o", "+"],
-    xticklabels=[10, 50, 100, 500, 1000],
+    xticklabels=[0, 0.1, 0.25],
     xlabel="Epsilon",
     ylabel="Runtime (seconds)",
 )
 compute_stats(df, "epsilon", P_ALPHA, "figures/random_epsilon_runtime.csv", outcome="time")
+
+fig_r.legend(handles, labels, loc="upper center", ncols=len(handles), bbox_to_anchor=(0.5, 1.1))
+fig_r.savefig("figures/random_runtime.pgf", bbox_inches="tight", pad_inches=0)
