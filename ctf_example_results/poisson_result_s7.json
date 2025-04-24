@@ -1,0 +1,2590 @@
+{
+  "data_size": 1000,
+  "pset": ["add", "cos", "log", "mul", "power_0", "power_1", "power_2", "power_3", "reciprocal", "root", "sin", "tan"],
+  "num_vars": 3,
+  "lr_raw_formula": "add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+  "lr_simplified_formula": "-5.127491468488457*height + 52.61137122930924*intensity - 3.407429407396644*width - 88.55098531596494",
+  "lr_nrmse": 0.05739514823364066,
+  "lr_test_outcomes": [{
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.1829549487953452,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.007509690541438922,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.14514738733107607,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.24925943840125728,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.3307651941867375,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.39630647386124607,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.45015532253204127,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.4951843639500795,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.5333964473931562,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.5662306715902117,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 13.93165291875879,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -263.3225586945134,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -10.779097486874292,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -5.023768378954641,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -3.0465854181467336,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -2.0465993666816438,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -1.4429109240569815,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -1.038899742403062,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.7495562817759802,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.5321293959282827,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8564420164884368,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.007595247478665,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.185544290923744,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.39810752589198,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6564726490474104,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.9772308310848348,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.386086948719379,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.925113577729679,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 5.668245265400552,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 6.758484337274891,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.2998282519108515,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.335016903728437,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.3721638070773645,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.4114371058711535,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.4530247613034812,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.49713756004087,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.544012687531434,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.593917994288786,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.647157117175544,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.7040756625018045,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "-88.55 - 3.41*width - 5.13*height + 52.61*intensity",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }],
+  "lr_test_nrmse": 48.564764029205286,
+  "lr_test_bcr": 0.36486486486486486,
+  "lr_time": 0.008646488189697266,
+  "gp_lr_raw_formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+  "gp_lr_simplified_formula": "-0.026137178481123301*height**2*width + 2.1702802725190151*height**2 - 0.058188102660439442*height*intensity**2 - 22.039790847342835*height + 3.5556397409319502*intensity**2 + 50.383021537212804",
+  "gp_lr_nrmse": 0.04830237525457663,
+  "gp_lr_test_outcomes": [{
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 1.308736466480918,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 1.5664532103043967,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.5673582331083136,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -6.112600297656345,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.7610931646421442,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.5604085225125944,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -1.8039009535608692,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.471370375608449,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 1.7711247623436395,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 1.3740620828111885,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 1.943616914140352,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.446460594106916,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.441978237233701,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 5.654385990448875,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 10.255598375897645,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 12.137650195014803,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 7.217416644801956,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.1054196669056555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.74154814779564,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.0889233826928586,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.9419812768149467,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.364984905281012,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.837877602847722,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.292584551752109,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.60996912579955,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.670446920472062,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.445785078393553,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.025678170676542,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.5409703625974145,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.0851380030781455,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.640372040596232,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.8112873868401604,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.9577572778683767,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.068160463288412,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.132315230135897,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.143550913197039,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.1002713965099336,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.006378595006324,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.8703661453224156,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.703461564439236,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(-13.669379935200205, mul(3571.199277161845, mul(0.07173241919744588, mul(-0.08599344749332509, height)))), mul(-0.5101748291742797, mul(-0.7839719354117854, mul(2.721238786581222, mul(1742.1905009905731, mul(0.0006343842205567219, add(add(53.24774338993517, mul(2.955857831399862, mul(intensity, intensity))), mul(1.0027503149921824, mul(0.034198667505366424, mul(add(add(mul(52.61137122930924, height), mul(0.6085662945250264, 0.4655379104304983)), -0.5447272959438998), height)))))))))), mul(0.8438827881473192, mul(-0.0003128125221411705, mul(1.237006874222219, mul(mul(-17771.182303162364, mul(0.0006343842205567219, add(mul(2.955857831399862, mul(intensity, intensity)), mul(1.0027503149921824, mul(mul(0.4655379104304983, mul(-0.5447272959438998, mul(-5.2213288994704365, width))), height))))), mul(0.9682545516702105, mul(-5.522732920154834, height)))))))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }],
+  "gp_lr_test_nrmse": 3.1387332652398277,
+  "gp_lr_test_bcr": 0.7941176470588236,
+  "gp_lr_time": 59.805317401885986,
+  "gp_seed_raw_formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+  "gp_seed_simplified_formula": "-5.127491468488457*height + 52.61137122930924*intensity - 3.407429407396644*width + Log(1, -1) - 88.46485693854444 + 1.0/height",
+  "gp_seed_nrmse": 0.0565779348600793,
+  "gp_seed_test_outcomes": [{
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.21256748910783632,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.0035870246588928733,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.1392810734174843,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.24564123163373758,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.32832051477627416,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.3945502350598502,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.44883630968813754,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.4941596249197832,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.5325787912541545,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 0.5655639912853158,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 12.408776517962218,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 560.5651661723717,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -11.359452802357099,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -5.14195559392933,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -3.0916083826283294,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -2.0690630046047636,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -1.4559674804154077,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -1.0472752105651275,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.7553128904931744,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": -0.5362930292905437,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.838823755339222,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.9964321721707106,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.1760648188603766,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.388957073523006,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6469124651226688,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.9666211205501907,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.373657054091189,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 4.909717693900886,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 5.647909264058924,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 6.729304486104879,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.2954828575608377,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.3325395386636982,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.3702899298139535,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.4098479394662586,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.451590895277294,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.495792529909539,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.542716775626208,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.5926446030726966,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.64588666239254,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.702792464788934,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "add(add(add(add(add(-88.55098531596494, mul(-3.407429407396644, width)), add(log(power_0(add(add(-88.55098531596494, reciprocal(-3.407429407396644)), add(width, power_2(-3.407429407396644))))), mul(reciprocal(mul(-3.407429407396644, height)), -3.407429407396644))), mul(reciprocal(-3.407429407396644), reciprocal(-3.407429407396644))), mul(-5.127491468488457, height)), mul(52.61137122930924, intensity))",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }],
+  "gp_seed_test_nrmse": 101.24113511150578,
+  "gp_seed_test_bcr": 0.36486486486486486,
+  "gp_seed_time": 59.32763361930847,
+  "original_model_formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+  "original_model_nrmse": 0.04991734352734176,
+  "original_test_outcomes": [{
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 1,
+    "treatment_value": 2,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 2.8279584525299963,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 2,
+    "treatment_value": 4,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.171104125365454,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 4,
+    "treatment_value": 8,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.4772193899252555,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": false,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 1,
+      "height": 1
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 2,
+      "height": 2
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 3,
+      "height": 3
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 4,
+      "height": 4
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 5,
+      "height": 5
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 6,
+      "height": 6
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 7,
+      "height": 7
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 8,
+      "height": 8
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 9,
+      "height": 9
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }, {
+    "treatment": "intensity",
+    "control_value": 8,
+    "treatment_value": 16,
+    "outcome": "num_shapes_unit",
+    "adjustment_set": {
+      "width": 10,
+      "height": 10
+    },
+    "effect_measure": "risk_ratio",
+    "effect_estimate": 3.6993111153185065,
+    "ci_low": null,
+    "ci_high": null,
+    "passed": true,
+    "formula": "4.26*intensity + 3.01*I(intensity ** 2)",
+    "expected_causal_effect": "ExactValue: 4\u00b10.5"
+  }],
+  "original_model_time": 0.020348310470581055
+}
